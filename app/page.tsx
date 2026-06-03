@@ -38,7 +38,7 @@ const projects = [
     title: "Tassen Corp Website",
     tag: "Company Website | Currently building",
     description:
-      "A business webpage designed for Tassen Corp to present the company, its services, and its role as a mediator/importer of raw materials for the plastics industry. Company: https://qpvgroup.com/",
+      "A business webpage designed for Tassen Corp to present the company, its services, and its role as a mediator/importer of raw materials for the plastics industry.",
     size: "medium",
     tools: ["HTML", "CSS", "JavaScript", "Figma", "VS Code"],
     images: [
