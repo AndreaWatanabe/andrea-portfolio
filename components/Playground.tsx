@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import Reveal from "./Reveal";
+import GrannySquare from "./GrannySquare";
 import { burstPetals } from "./PetalField";
-import { hobbySlides, puzzleSolution, puzzleStart } from "@/data/content";
+import { hobbySlides, otherInterests, puzzleSolution, puzzleStart } from "@/data/content";
 
 /** Indexes that clash with another filled cell in the same row, column, or box. */
 function findConflicts(values: (number | null)[]) {
@@ -67,8 +68,7 @@ function Sudoku() {
     setValues(next);
     setMessage("");
 
-    const complete = next.every((value, i) => value === puzzleSolution[i]);
-    if (complete) celebrate();
+    if (next.every((value, i) => value === puzzleSolution[i])) celebrate();
   }
 
   function check() {
@@ -76,12 +76,10 @@ function Sudoku() {
       setMessage("Not done yet — keep going.");
       return;
     }
-
     if (values.every((value, index) => value === puzzleSolution[index])) {
       celebrate();
       return;
     }
-
     setMessage("Something is off — try again.");
   }
 
@@ -90,7 +88,10 @@ function Sudoku() {
 
     const open = values
       .map((value, index) => ({ value, index }))
-      .filter(({ value, index }) => puzzleStart[index] === null && value !== puzzleSolution[index]);
+      .filter(
+        ({ value, index }) =>
+          puzzleStart[index] === null && value !== puzzleSolution[index]
+      );
 
     if (open.length === 0) {
       setMessage("Nothing left to reveal.");
@@ -106,7 +107,6 @@ function Sudoku() {
       celebrate();
       return;
     }
-
     setMessage("One petal of help ✿");
   }
 
@@ -170,7 +170,7 @@ function Sudoku() {
       </div>
 
       <p className={`sudoku-message ${message ? "is-shown" : ""}`} role="status">
-        {message || " "}
+        {message || " "}
       </p>
     </article>
   );
@@ -221,28 +221,30 @@ function Hobbies() {
           />
         ))}
       </div>
+
+      <div className="hobby-extra">
+        {otherInterests.map((interest) => (
+          <span key={interest}>{interest}</span>
+        ))}
+      </div>
     </article>
   );
 }
 
 export default function Playground() {
   return (
-    <section id="play" className="section">
-      <Reveal className="section-title">
-        <p className="section-kicker">
-          <span aria-hidden="true">✿</span> playground
-        </p>
-        <h2>Mini experiments</h2>
-      </Reveal>
-
-      <div className="playground-layout">
+    <div className="playground-layout">
+      <div className="playground-column">
         <Reveal>
           <Sudoku />
         </Reveal>
-        <Reveal delay={0.1}>
-          <Hobbies />
+        <Reveal delay={0.08}>
+          <GrannySquare />
         </Reveal>
       </div>
-    </section>
+      <Reveal delay={0.14}>
+        <Hobbies />
+      </Reveal>
+    </div>
   );
 }

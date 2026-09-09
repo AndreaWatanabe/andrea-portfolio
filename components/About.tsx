@@ -1,91 +1,76 @@
+import Image from "next/image";
 import Reveal from "./Reveal";
-import { certificates, languages, skills } from "@/data/content";
+import SectionTitle from "./SectionTitle";
+import { hasPhoto, hasResume, photoSrc, resumeSrc } from "@/lib/assets";
+import { profile } from "@/data/content";
 
 export default function About() {
   return (
     <section id="about" className="section">
-      <Reveal className="section-title">
-        <p className="section-kicker">
-          <span aria-hidden="true">✿</span> about me
-        </p>
-        <h2>Studying economics, building things, learning by making</h2>
-      </Reveal>
+      <SectionTitle
+        kicker="about me"
+        title="Studying economics, building things, learning by making"
+        subtitle="The person behind the spreadsheets."
+      />
 
       <div className="about-grid">
-        <Reveal className="about-main-wrap">
-          <article className="about-main">
-            <div>
-              <div className="about-label">Andrea Watanabe</div>
-
-              <p>
-                I&rsquo;m an Economics student at Simon Fraser University with a
-                concentration in Data Analysis. I&rsquo;m interested in the intersection
-                of business, data, technology, and design, because I like turning messy
-                information into something clear, useful, and easy to use.
-              </p>
-
-              <p>
-                Through university, internships, volunteer work, and personal projects,
-                I&rsquo;ve been developing skills in product thinking, data analysis,
-                communication, event planning, and digital tools.
-              </p>
-            </div>
-
-            <div className="about-highlights">
-              <span>Economics @ SFU</span>
-              <span>Data Analysis concentration</span>
-              <span>Product + data curious</span>
-              <span>UX/UI</span>
-            </div>
-          </article>
+        <Reveal className="about-portrait-wrap">
+          <div className="about-portrait">
+            {hasPhoto ? (
+              <Image
+                src={photoSrc as string}
+                alt={profile.name}
+                fill
+                sizes="(max-width: 900px) 80vw, 380px"
+                className="about-portrait-img"
+              />
+            ) : (
+              <div className="about-portrait-placeholder">
+                <span aria-hidden="true">✿</span>
+                <p>
+                  Drop a photo at
+                  <code>public/photo.jpg</code>
+                  and it appears here.
+                </p>
+              </div>
+            )}
+          </div>
         </Reveal>
 
-        <div className="about-side">
-          <Reveal delay={0.08}>
-            <article className="about-card soft-pink">
-              <p className="card-kicker">toolkit</p>
-              <h3>Skills</h3>
+        <Reveal className="about-copy" delay={0.08}>
+          <p className="about-lead">
+            I&rsquo;m an Economics student at Simon Fraser University with a
+            concentration in Data Analysis.
+          </p>
 
-              <div className="about-pill-list">
-                {skills.map((skill) => (
-                  <span key={skill}>{skill}</span>
-                ))}
-              </div>
-            </article>
-          </Reveal>
+          <p>
+            I like the intersection of business, data, technology, and design, because
+            that&rsquo;s where messy information turns into something clear, useful, and
+            easy to act on. Most of my work starts with a pile of records nobody wants
+            to open and ends with a dashboard, a document, or a tool someone actually
+            uses.
+          </p>
 
-          <Reveal delay={0.14}>
-            <article className="about-card soft-plum">
-              <p className="card-kicker">communication</p>
-              <h3>Languages</h3>
+          <p>
+            Right now that looks like maintaining a database of several thousand workers
+            and employers at the Consulate, building Copilot agents that halved my email
+            load, and putting together a Power BI dashboard in my own time. Outside of
+            that I&rsquo;m training for Ironman Victoria and crocheting on the commute.
+          </p>
 
-              <div className="language-list">
-                {languages.map((language) => (
-                  <div key={language.name}>
-                    <span>{language.name}</span>
-                    <small>{language.level}</small>
-                  </div>
-                ))}
-              </div>
-            </article>
-          </Reveal>
+          <div className="about-highlights">
+            <span>Economics @ SFU</span>
+            <span>Data Analysis concentration</span>
+            <span>Spanish · English · French</span>
+            <span>Vancouver, BC</span>
+          </div>
 
-          <Reveal delay={0.2}>
-            <article className="about-card soft-cream">
-              <p className="card-kicker">learning</p>
-              <h3>Certificates &amp; courses</h3>
-
-              <div className="achievement-list">
-                {certificates.map((certificate) => (
-                  <div key={certificate.name}>
-                    <strong>{certificate.name}</strong>
-                    <span>{certificate.area}</span>
-                  </div>
-                ))}
-              </div>
-            </article>
-          </Reveal>
-        </div>
+          {hasResume && (
+            <a href={resumeSrc as string} className="button button-primary about-resume">
+              View résumé ↗
+            </a>
+          )}
+        </Reveal>
       </div>
     </section>
   );

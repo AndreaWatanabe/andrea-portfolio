@@ -1,72 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { burstPetals } from "./PetalField";
-
-const NAME = "Andrea Watanabe";
-
-const TABS = [
-  { id: "work", label: "Work" },
-  { id: "play", label: "Play" },
-  { id: "experience", label: "Experience" },
-  { id: "about", label: "About" },
-  { id: "contact", label: "Contact" },
-];
+import { profile } from "@/data/content";
 
 export default function Hero() {
-  const [active, setActive] = useState("work");
   const [shakes, setShakes] = useState(0);
-
-  // Highlight the tab for whichever section is currently in view.
-  useEffect(() => {
-    const sections = TABS.map((tab) => document.getElementById(tab.id)).filter(
-      (node): node is HTMLElement => node !== null
-    );
-
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible) setActive(visible.target.id);
-      },
-      { threshold: [0.15, 0.4, 0.7], rootMargin: "-18% 0px -50% 0px" }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    // Near the top of the page no section sits inside the observed band, so
-    // pin the first tab rather than leaving whatever was last in view.
-    const onScroll = () => {
-      if (window.scrollY < 220) setActive(TABS[0].id);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  function shakeTree() {
-    setShakes((count) => count + 1);
-    burstPetals(26);
-  }
 
   return (
     <header className="hero">
-      <div className="hero-mark" aria-hidden="true">
-        <span className="hero-mark-blossom">✿</span>
-        <span className="hero-mark-text">AW</span>
-      </div>
+      <p className="hero-greeting">Hey — I&rsquo;m</p>
 
       <h1 className="hero-name">
-        <span className="sr-only">{NAME}</span>
+        <span className="sr-only">{profile.name}</span>
         <span aria-hidden="true" className="hero-name-letters">
-          {NAME.split("").map((character, index) =>
+          {profile.name.split("").map((character, index) =>
             character === " " ? (
               <span key={index} className="hero-space">
                 &nbsp;
@@ -75,7 +23,7 @@ export default function Hero() {
               <span
                 key={index}
                 className="hero-letter"
-                style={{ animationDelay: `${0.24 + index * 0.035}s` }}
+                style={{ animationDelay: `${0.2 + index * 0.032}s` }}
               >
                 {character}
               </span>
@@ -84,19 +32,28 @@ export default function Hero() {
         </span>
       </h1>
 
-      <p className="hero-description">
-        Economics student at SFU designing useful tools at the intersection of data,
-        business, UX, and technology. Currently exploring product strategy, AI, and
-        interactive web projects.
-      </p>
+      <p className="hero-description">{profile.tagline}</p>
 
       <div className="hero-actions">
-        <span className="hero-status">
-          <span className="status-dot" aria-hidden="true" />
-          Open to co-op roles
-        </span>
-
-        <button type="button" className="shake-button" onClick={shakeTree}>
+        <a href="#contact" className="button button-primary">
+          Get in touch
+        </a>
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="button button-ghost"
+        >
+          LinkedIn ↗
+        </a>
+        <button
+          type="button"
+          className="button button-ghost shake-button"
+          onClick={() => {
+            setShakes((count) => count + 1);
+            burstPetals(26);
+          }}
+        >
           <span className="shake-button-icon" aria-hidden="true">
             🌸
           </span>
@@ -109,18 +66,14 @@ export default function Hero() {
         </button>
       </div>
 
-      <nav className="tab-nav" aria-label="Sections">
-        {TABS.map((tab) => (
-          <a
-            key={tab.id}
-            href={`#${tab.id}`}
-            className={active === tab.id ? "active-tab" : undefined}
-            aria-current={active === tab.id ? "true" : undefined}
-          >
-            {tab.label}
-          </a>
-        ))}
-      </nav>
+      <div className="hero-meta">
+        <span className="hero-status">
+          <span className="status-dot" aria-hidden="true" />
+          Open to co-op roles
+        </span>
+        <span className="hero-place">{profile.location}</span>
+        <span className="hero-place">Economics @ SFU</span>
+      </div>
     </header>
   );
 }

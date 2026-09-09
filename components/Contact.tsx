@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import { profile } from "@/data/content";
 
 export default function Contact() {
   return (
@@ -14,15 +15,14 @@ export default function Contact() {
         </div>
 
         <div className="contact-links">
-          <a href="mailto:sakurawt32@gmail.com" className="email-link">
-            sakurawt32@gmail.com
+          <a href={`mailto:${profile.email}`} className="button button-primary">
+            {profile.email}
           </a>
-
           <a
-            href="https://www.linkedin.com/in/andreawatanabe"
+            href={profile.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="linkedin-link"
+            className="button button-ghost"
           >
             LinkedIn ↗
           </a>
@@ -30,7 +30,8 @@ export default function Contact() {
       </Reveal>
 
       <p className="colophon">
-        Built with Next.js · <span aria-hidden="true">✿</span> {new Date().getFullYear()}
+        Built with Next.js · <span aria-hidden="true">✿</span>{" "}
+        {new Date().getFullYear()} {profile.name}
       </p>
     </section>
   );

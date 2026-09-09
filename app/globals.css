@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Andrea Watanabe — sakura theme
-   Palette: warm plum ink on blush paper, cherry-blossom pink as the accent.
+   Andrea Watanabe — sakura + crochet
+   Warm plum ink on blush paper, cherry pink accents, and yarn where it fits.
    ========================================================================== */
 
 :root {
@@ -19,7 +19,7 @@
   --surface: rgba(255, 255, 255, 0.78);
   --surface-strong: rgba(255, 255, 255, 0.94);
   --line: rgba(211, 61, 114, 0.14);
-  --line-strong: rgba(211, 61, 114, 0.26);
+  --line-strong: rgba(211, 61, 114, 0.28);
 
   --shadow-sm: 0 6px 18px rgba(150, 55, 90, 0.07);
   --shadow-md: 0 18px 44px rgba(150, 55, 90, 0.1);
@@ -32,6 +32,9 @@
   --font-serif: var(--font-display), Georgia, "Times New Roman", serif;
 
   --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+
+  /* A crochet chain stitch, tiled horizontally. */
+  --chain-stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='14'%3E%3Cellipse cx='11' cy='7' rx='10.2' ry='5' fill='none' stroke='%23f4739b' stroke-width='1.6' opacity='0.75'/%3E%3C/svg%3E");
 }
 
 * {
@@ -49,10 +52,10 @@ body {
   min-height: 100dvh;
   background-color: var(--paper);
   background-image:
-    radial-gradient(circle at 84% -4%, rgba(255, 173, 203, 0.55), transparent 42%),
-    radial-gradient(circle at 6% 12%, rgba(255, 221, 234, 0.75), transparent 38%),
-    radial-gradient(circle at 12% 88%, rgba(255, 236, 214, 0.6), transparent 40%),
-    radial-gradient(circle at 92% 72%, rgba(255, 199, 220, 0.45), transparent 38%),
+    radial-gradient(circle at 84% -4%, rgba(255, 173, 203, 0.5), transparent 42%),
+    radial-gradient(circle at 6% 12%, rgba(255, 221, 234, 0.7), transparent 38%),
+    radial-gradient(circle at 12% 88%, rgba(255, 236, 214, 0.55), transparent 40%),
+    radial-gradient(circle at 92% 72%, rgba(255, 199, 220, 0.4), transparent 38%),
     linear-gradient(168deg, #fffafc 0%, #fff5f8 45%, #fff2f0 100%);
   background-attachment: fixed;
   color: var(--ink);
@@ -100,9 +103,269 @@ button {
 .page {
   position: relative;
   z-index: 1;
-  width: min(1180px, calc(100% - 48px));
+  width: min(1180px, calc(100% - 44px));
   margin: 0 auto;
-  padding: 40px 0 0;
+  padding: 96px 0 0;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 999px;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.button-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--blossom) 0%, var(--blossom-deep) 100%);
+  box-shadow: var(--shadow-md);
+}
+
+.button-ghost {
+  color: var(--blossom-deep);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.button-ghost:hover {
+  background: var(--petal-soft);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ==========================================================================
+   Sticky navigation
+   ========================================================================== */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px max(22px, calc((100vw - 1180px) / 2));
+  transition:
+    background 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    padding 0.3s var(--ease);
+}
+
+.site-nav.is-stuck {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: rgba(255, 246, 249, 0.82);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--line), var(--shadow-sm);
+}
+
+.nav-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  color: #fff;
+  background: linear-gradient(140deg, var(--blossom) 0%, var(--blossom-deep) 100%);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease);
+}
+
+.nav-mark:hover {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.nav-mark-text {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.nav-mark-blossom {
+  position: absolute;
+  top: -9px;
+  right: -10px;
+  font-size: 17px;
+  color: var(--blossom);
+  animation: blossom-spin 9s linear infinite;
+}
+
+.nav-links {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 2px;
+  list-style: none;
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  border-radius: 999px;
+  transition:
+    color 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.nav-links a:hover {
+  color: var(--blossom-deep);
+  background: var(--petal-soft);
+}
+
+.nav-links a.is-active {
+  color: var(--ink);
+  background: var(--surface-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-cta {
+  flex: none;
+  margin-left: auto;
+  padding: 10px 20px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--blossom) 0%, var(--blossom-deep) 100%);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease);
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+}
+
+/* ---- Mobile menu ---- */
+
+.nav-toggle {
+  display: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-left: auto;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-toggle-bars {
+  display: grid;
+  gap: 4px;
+  width: 18px;
+}
+
+.nav-toggle-bars span {
+  display: block;
+  height: 2px;
+  background: var(--blossom-deep);
+  border-radius: 2px;
+  transition: transform 0.28s var(--ease), opacity 0.2s var(--ease);
+}
+
+.nav-toggle-bars.is-open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle-bars.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle-bars.is-open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 16px;
+  left: 16px;
+  padding: 10px;
+  /* Solid, not translucent: the hero type behind it must not read through. */
+  background: #fffdfe;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+}
+
+.nav-panel ul {
+  display: grid;
+  gap: 2px;
+  list-style: none;
+}
+
+.nav-panel a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border-radius: 12px;
+}
+
+.nav-panel a.is-active {
+  color: var(--blossom-deep);
+  background: var(--petal-soft);
+}
+
+.nav-panel-cta {
+  margin-top: 4px;
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--blossom) 0%, var(--blossom-deep) 100%);
+  text-align: center;
+}
+
+@media (max-width: 759px) {
+  .site-nav {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .nav-links,
+  .site-nav > .nav-cta:not(.nav-back) {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: grid;
+  }
+
+  .nav-panel.is-open {
+    display: block;
+    animation: panel-in 0.24s var(--ease);
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 /* ==========================================================================
@@ -163,6 +426,12 @@ button {
   }
 }
 
+@keyframes blossom-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ==========================================================================
    Scroll reveal
    ========================================================================== */
@@ -185,70 +454,25 @@ button {
    ========================================================================== */
 
 .hero {
-  position: relative;
-  padding: 30px 0 46px;
-  margin-bottom: 26px;
+  padding: 54px 0 30px;
+  text-align: center;
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(90deg, var(--line-strong), transparent 72%);
-}
-
-.hero-mark {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 72px;
-  color: #fff;
-  background: linear-gradient(140deg, var(--blossom) 0%, var(--blossom-deep) 100%);
-  border-radius: 18px;
-  box-shadow: var(--shadow-md);
-  animation: mark-in 0.8s var(--ease) backwards;
-}
-
-.hero-mark-text {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-
-.hero-mark-blossom {
-  position: absolute;
-  top: -12px;
-  right: -14px;
-  font-size: 22px;
-  color: var(--petal);
-  animation: blossom-spin 9s linear infinite;
-}
-
-@keyframes mark-in {
-  from {
-    opacity: 0;
-    transform: translateY(-14px) rotate(-14deg);
-  }
-}
-
-@keyframes blossom-spin {
-  to {
-    transform: rotate(360deg);
-  }
+.hero-greeting {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+  animation: soft-rise 0.8s var(--ease) backwards;
 }
 
 .hero-name {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(56px, 11vw, 138px);
-  line-height: 0.94;
+  font-size: clamp(52px, 10.5vw, 132px);
+  line-height: 0.95;
   letter-spacing: -0.02em;
-  margin-bottom: 26px;
+  margin-bottom: 22px;
 }
 
 .hero-name-letters {
@@ -280,15 +504,6 @@ button {
   }
 }
 
-.hero-description {
-  max-width: 660px;
-  font-size: clamp(17px, 1.6vw, 20px);
-  line-height: 1.62;
-  color: var(--ink-soft);
-  margin-bottom: 30px;
-  animation: soft-rise 0.9s 0.55s var(--ease) backwards;
-}
-
 @keyframes soft-rise {
   from {
     opacity: 0;
@@ -296,21 +511,39 @@ button {
   }
 }
 
+.hero-description {
+  max-width: 620px;
+  margin: 0 auto 30px;
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  animation: soft-rise 0.9s 0.5s var(--ease) backwards;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 34px;
-  animation: soft-rise 0.9s 0.68s var(--ease) backwards;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 26px;
+  animation: soft-rise 0.9s 0.62s var(--ease) backwards;
 }
 
-.hero-status {
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  animation: soft-rise 0.9s 0.74s var(--ease) backwards;
+}
+
+.hero-status,
+.hero-place {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 10px 18px;
-  font-size: 14px;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--ink-soft);
   background: var(--surface);
@@ -336,39 +569,12 @@ button {
   }
 }
 
-.shake-button {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, var(--blossom) 0%, var(--blossom-deep) 100%);
-  border-radius: 999px;
-  box-shadow: var(--shadow-md);
-  transition:
-    transform 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
-}
-
-.shake-button:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
-.shake-button:active {
-  transform: translateY(0) scale(0.97);
+.shake-button .shake-button-icon {
+  font-size: 16px;
 }
 
 .shake-button:hover .shake-button-icon {
   animation: wiggle 0.6s ease-in-out;
-}
-
-.shake-button-icon {
-  display: inline-block;
-  font-size: 17px;
 }
 
 @keyframes wiggle {
@@ -384,47 +590,91 @@ button {
 }
 
 .shake-count {
-  min-width: 22px;
+  min-width: 21px;
   padding: 1px 7px;
   font-size: 12px;
   font-weight: 800;
-  color: var(--blossom-deep);
-  background: #fff;
+  color: #fff;
+  background: var(--blossom);
   border-radius: 999px;
 }
 
-/* Nav */
+/* ==========================================================================
+   Now — with a crochet scalloped hem
+   ========================================================================== */
 
-.tab-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  animation: soft-rise 0.9s 0.8s var(--ease) backwards;
+.now-section {
+  padding: 12px 0 30px;
 }
 
-.tab-nav a {
+.now-card {
   position: relative;
-  padding: 9px 18px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink-faint);
-  border-radius: 999px;
-  transition:
-    color 0.25s var(--ease),
-    background 0.25s var(--ease),
-    transform 0.25s var(--ease);
-}
-
-.tab-nav a:hover {
-  color: var(--blossom-deep);
-  background: var(--petal-soft);
-  transform: translateY(-2px);
-}
-
-.tab-nav .active-tab {
-  color: var(--ink);
-  background: var(--surface-strong);
+  padding: 26px 28px 30px;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(255, 234, 241, 0.82));
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
+}
+
+/* Doily scallops hanging off the bottom edge. */
+.now-card::after,
+.granny-card::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -9px;
+  height: 12px;
+  background-image: radial-gradient(circle at 10px 1px, var(--petal) 7px, transparent 7.5px);
+  background-size: 20px 12px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+
+.now-head {
+  margin-bottom: 18px;
+}
+
+.now-head h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.now-list {
+  display: grid;
+  gap: 16px;
+  list-style: none;
+}
+
+.now-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.now-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  font-size: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.now-list strong {
+  display: block;
+  font-size: 15.5px;
+}
+
+.now-list p {
+  font-size: 14px;
+  color: var(--ink-soft);
 }
 
 /* ==========================================================================
@@ -432,12 +682,13 @@ button {
    ========================================================================== */
 
 .section {
-  padding: 58px 0;
-  scroll-margin-top: 24px;
+  padding: 62px 0;
+  scroll-margin-top: 82px;
 }
 
 .section-title {
-  margin-bottom: 34px;
+  margin-bottom: 38px;
+  text-align: center;
 }
 
 .section-kicker {
@@ -445,33 +696,141 @@ button {
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blossom-deep);
-}
-
-.section-kicker span {
-  font-size: 15px;
 }
 
 .section-title h2 {
-  max-width: 780px;
+  max-width: 800px;
+  margin: 0 auto;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(34px, 4.6vw, 62px);
-  line-height: 1.04;
+  font-size: clamp(33px, 4.4vw, 58px);
+  line-height: 1.05;
   letter-spacing: -0.015em;
 }
 
+/* The crochet chain stitch under every section heading. */
+.title-stitch {
+  display: block;
+  width: 132px;
+  height: 14px;
+  margin: 16px auto 0;
+  background-image: var(--chain-stitch);
+  background-repeat: repeat-x;
+}
+
+.section-subtitle {
+  max-width: 520px;
+  margin: 14px auto 0;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
 .card-kicker {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--blossom-deep);
   margin-bottom: 6px;
+}
+
+/* ==========================================================================
+   About
+   ========================================================================== */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.about-portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  padding: 10px;
+  background: #fff;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.about-portrait-img {
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+
+.about-portrait-placeholder {
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(150deg, var(--petal-soft), var(--petal));
+  border-radius: var(--radius-sm);
+}
+
+.about-portrait-placeholder span {
+  font-size: 46px;
+  color: rgba(211, 61, 114, 0.4);
+  animation: blossom-spin 16s linear infinite;
+}
+
+.about-portrait-placeholder p {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.about-portrait-placeholder code {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blossom-deep);
+}
+
+.about-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(23px, 2.6vw, 31px);
+  line-height: 1.24;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.about-copy p {
+  max-width: 62ch;
+  margin-bottom: 14px;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
+.about-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.about-highlights span {
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--blossom-deep);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.about-resume {
+  margin-top: 22px;
 }
 
 /* ==========================================================================
@@ -508,7 +867,6 @@ button {
     border-color 0.35s var(--ease);
 }
 
-/* A blossom-tinted glow that fades in behind the card on hover. */
 .project-card::before {
   content: "";
   position: absolute;
@@ -546,7 +904,7 @@ button {
 
 .project-tag {
   padding: 5px 13px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--ink-soft);
   background: var(--petal-soft);
@@ -586,37 +944,9 @@ button {
 }
 
 .project-preview-empty span {
-  font-size: 42px;
+  font-size: 40px;
   color: rgba(211, 61, 114, 0.32);
   animation: blossom-spin 16s linear infinite;
-}
-
-.project-dots {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  display: flex;
-  gap: 6px;
-  padding: 6px 9px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(4px);
-  border-radius: 999px;
-}
-
-.project-dots button {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(211, 61, 114, 0.28);
-  transition:
-    background 0.25s var(--ease),
-    width 0.25s var(--ease);
-}
-
-.project-dots button.is-active {
-  width: 18px;
-  border-radius: 999px;
-  background: var(--blossom-deep);
 }
 
 .project-card-bottom {
@@ -643,7 +973,7 @@ button {
 }
 
 .project-card:hover .project-arrow {
-  transform: translate(3px, -3px);
+  transform: translateX(5px);
 }
 
 .project-card-bottom > p {
@@ -670,29 +1000,419 @@ button {
 }
 
 /* ==========================================================================
-   Playground
+   Experience
+   ========================================================================== */
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.experience-item {
+  display: flex;
+}
+
+.experience-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.experience-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.experience-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Let the long job title wrap instead of pushing the date onto its own line. */
+.experience-top > div {
+  min-width: 0;
+}
+
+.experience-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 1.14;
+}
+
+.experience-place {
+  margin-top: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blossom-deep);
+}
+
+.experience-location {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+.experience-date {
+  flex: none;
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: var(--petal-soft);
+  border-radius: 999px;
+}
+
+.experience-bullets {
+  display: grid;
+  gap: 7px;
+  list-style: none;
+}
+
+.experience-bullets li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* Bullet drawn as a small blossom. */
+.experience-bullets li::before {
+  content: "✿";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 11px;
+  color: var(--blossom);
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.skills span {
+  padding: 4px 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.also-worked {
+  margin-top: 20px;
+  padding: 22px 26px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+}
+
+.also-list {
+  display: grid;
+  gap: 18px;
+}
+
+.also-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.also-head strong {
+  font-size: 15px;
+}
+
+.also-head span {
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.also-place {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blossom-deep);
+}
+
+.also-note {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Education, awards, certifications
+   ========================================================================== */
+
+.credentials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.credentials-main,
+.credentials-side {
+  display: grid;
+  gap: 18px;
+}
+
+.about-card {
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.about-card h3 {
+  margin-bottom: 12px;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 1.12;
+}
+
+.soft-pink {
+  background: linear-gradient(150deg, #fff, var(--petal-soft));
+}
+
+.soft-plum {
+  background: linear-gradient(150deg, #fff, #f6ecff);
+}
+
+.soft-cream {
+  background: linear-gradient(150deg, #fff, var(--cream));
+}
+
+.education-degree {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--blossom-deep);
+}
+
+.education-meta {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.education-grad {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 5px 13px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.education-course-label {
+  margin-top: 22px;
+}
+
+.coursework {
+  display: grid;
+  gap: 7px;
+  list-style: none;
+}
+
+.coursework li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.coursework li::before {
+  content: "✿";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 11px;
+  color: var(--blossom);
+}
+
+.achievement-list {
+  display: grid;
+  gap: 10px;
+}
+
+.achievement-list div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.achievement-list div:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.achievement-list strong {
+  font-size: 14.5px;
+}
+
+.achievement-list span {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+/* ==========================================================================
+   Skills
+   ========================================================================== */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.skill-group {
+  height: 100%;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.skill-group:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.skill-group h3 {
+  margin-bottom: 14px;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.about-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.about-pill-list span {
+  padding: 6px 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.about-pill-list span:hover {
+  color: var(--blossom-deep);
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.language-card {
+  background: linear-gradient(150deg, #fff, #f6ecff);
+}
+
+.language-list {
+  display: grid;
+  gap: 10px;
+}
+
+.language-list div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.language-list div:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.language-list span {
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.language-list small {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+/* ==========================================================================
+   Playground — sudoku, granny square, hobbies
    ========================================================================== */
 
 .playground-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  align-items: stretch;
+  align-items: start;
 }
 
-.playground-layout > .reveal {
+.playground-layout > .reveal,
+.playground-column > .reveal {
   display: flex;
 }
 
+.playground-column {
+  display: grid;
+  gap: 20px;
+}
+
 .sudoku-card,
-.hobby-card {
+.hobby-card,
+.granny-card {
   flex: 1;
   padding: 26px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.35s var(--ease);
 }
 
 .sudoku-card {
@@ -715,10 +1435,11 @@ button {
 }
 
 .sudoku-top h3,
-.hobby-polaroid h3 {
+.hobby-polaroid h3,
+.granny-head h3 {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: 27px;
+  font-size: 26px;
   line-height: 1.1;
 }
 
@@ -727,7 +1448,8 @@ button {
   gap: 7px;
 }
 
-.sudoku-actions button {
+.sudoku-actions button,
+.granny-button {
   padding: 8px 15px;
   font-size: 13px;
   font-weight: 600;
@@ -739,12 +1461,14 @@ button {
     transform 0.22s var(--ease);
 }
 
-.sudoku-actions button:hover {
+.sudoku-actions button:hover,
+.granny-button:hover {
   background: var(--petal);
   transform: translateY(-2px);
 }
 
-.sudoku-actions button:active {
+.sudoku-actions button:active,
+.granny-button:active {
   transform: scale(0.95);
 }
 
@@ -752,7 +1476,9 @@ button {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   gap: 3px;
+  width: 100%;
   max-width: 380px;
+  margin: 0 auto;
   padding: 10px;
   background: var(--petal-soft);
   border-radius: var(--radius-sm);
@@ -777,7 +1503,6 @@ button {
     border-color 0.2s var(--ease);
 }
 
-/* Thicker gutters between the three-by-three boxes. */
 .sudoku-grid input:nth-child(9n + 4),
 .sudoku-grid input:nth-child(9n + 7) {
   margin-left: 3px;
@@ -821,18 +1546,75 @@ button {
   transform: none;
 }
 
+/* Granny square */
+
+.granny-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(255, 240, 232, 0.75));
+}
+
+.granny-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.granny-swatch {
+  position: relative;
+  width: 100%;
+  max-width: 210px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  padding: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.3s var(--ease);
+}
+
+.granny-swatch:hover {
+  transform: rotate(-3deg) scale(1.03);
+}
+
+.granny-ring {
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55);
+  transition: background 0.45s var(--ease);
+}
+
+.granny-centre {
+  position: absolute;
+  inset: 42%;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: var(--blossom-deep);
+  border-radius: 50%;
+  transition: background 0.45s var(--ease);
+}
+
+.granny-note {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
 /* Hobbies */
 
 .hobby-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.86), rgba(255, 232, 240, 0.7));
 }
 
 .speech {
-  position: relative;
   align-self: flex-start;
   padding: 9px 17px;
   font-size: 13px;
@@ -846,7 +1628,6 @@ button {
 
 .hobby-content {
   display: flex;
-  flex: 1;
   align-items: center;
   gap: 10px;
   width: 100%;
@@ -856,9 +1637,9 @@ button {
   flex: none;
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
-  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  font-size: 21px;
   color: var(--blossom-deep);
   background: #fff;
   border: 1px solid var(--line);
@@ -877,7 +1658,7 @@ button {
 .hobby-polaroid {
   flex: 1;
   min-width: 0;
-  padding: 14px 14px 20px;
+  padding: 13px 13px 18px;
   text-align: center;
   background: #fff;
   border-radius: 10px;
@@ -901,7 +1682,7 @@ button {
 .hobby-img {
   position: relative;
   aspect-ratio: 4 / 3;
-  margin-bottom: 12px;
+  margin-bottom: 11px;
   border-radius: 5px;
   background: var(--petal-soft);
   overflow: hidden;
@@ -913,7 +1694,7 @@ button {
 
 .hobby-polaroid p {
   margin-top: 4px;
-  font-size: 13.5px;
+  font-size: 13px;
   color: var(--ink-soft);
 }
 
@@ -938,265 +1719,214 @@ button {
   background: var(--blossom-deep);
 }
 
-/* ==========================================================================
-   Experience
-   ========================================================================== */
-
-.experience-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-
-.experience-item {
-  display: flex;
-}
-
-.experience-card {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  transition:
-    transform 0.35s var(--ease),
-    box-shadow 0.35s var(--ease);
-}
-
-.experience-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
-}
-
-.experience-top {
+.hobby-extra {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.experience-place {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--blossom-deep);
-}
-
-.experience-date {
-  padding: 4px 11px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  background: var(--petal-soft);
-  border-radius: 999px;
-}
-
-.experience-card h3 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1.12;
-}
-
-.experience-description {
-  font-size: 14.5px;
-  color: var(--ink-soft);
-}
-
-.skills {
-  display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 6px;
-  margin-top: auto;
-  padding-top: 12px;
 }
 
-.skills span {
+.hobby-extra span {
   padding: 4px 11px;
   font-size: 11.5px;
   font-weight: 600;
   color: var(--ink-soft);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
   border: 1px solid var(--line);
   border-radius: 999px;
 }
 
 /* ==========================================================================
-   About
+   Project detail pages
    ========================================================================== */
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  align-items: start;
+.project-page {
+  padding-bottom: 40px;
 }
 
-.about-main-wrap {
-  display: flex;
+.project-hero {
+  max-width: 780px;
+  margin: 0 auto 34px;
+  padding: 40px 0 0;
+  text-align: center;
 }
 
-.about-main {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 26px;
-  padding: 30px;
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(255, 236, 243, 0.75));
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-}
-
-.about-label {
+.project-hero-tag {
   display: inline-block;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   padding: 6px 15px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  color: #fff;
-  background: var(--ink);
+  color: var(--blossom-deep);
+  background: var(--petal-soft);
   border-radius: 999px;
 }
 
-.about-main p {
-  max-width: 62ch;
-  margin-bottom: 14px;
-  font-size: 15.5px;
+.project-hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 74px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.project-hero-blurb {
+  font-size: clamp(16.5px, 1.7vw, 20px);
+  color: var(--ink-soft);
+  margin-bottom: 26px;
+}
+
+.project-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 26px;
+  padding: 20px;
+  text-align: left;
+  background: var(--surface);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+}
+
+.project-facts dt {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blossom-deep);
+  margin-bottom: 4px;
+}
+
+.project-facts dd {
+  font-size: 14px;
   color: var(--ink-soft);
 }
 
-.about-highlights {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.about-highlights span {
-  padding: 7px 14px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--blossom-deep);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-}
-
-.about-side {
+.project-gallery {
   display: grid;
-  gap: 18px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 44px;
 }
 
-.about-card {
-  padding: 24px;
+.project-gallery figure {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  padding: 12px;
+  background: linear-gradient(150deg, #fff, var(--petal-soft));
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  transition:
-    transform 0.35s var(--ease),
-    box-shadow 0.35s var(--ease);
+  overflow: hidden;
 }
 
-.about-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
+/* Screenshots are the point here, so show the whole frame rather than crop it. */
+.project-gallery img {
+  object-fit: contain;
+  padding: 12px;
 }
 
-.about-card h3 {
+.project-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+  align-items: start;
+  margin-bottom: 44px;
+}
+
+.project-body h2 {
   margin-bottom: 14px;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 32px;
 }
 
-.soft-pink {
+.project-context,
+.project-highlights {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-context {
   background: linear-gradient(150deg, #fff, var(--petal-soft));
 }
 
-.soft-plum {
-  background: linear-gradient(150deg, #fff, #f6ecff);
-}
-
-.soft-cream {
-  background: linear-gradient(150deg, #fff, var(--cream));
-}
-
-.about-pill-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-.about-pill-list span {
-  padding: 6px 13px;
-  font-size: 12.5px;
-  font-weight: 600;
+.project-context p {
+  font-size: 16px;
   color: var(--ink-soft);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  transition:
-    color 0.2s var(--ease),
-    border-color 0.2s var(--ease),
-    transform 0.2s var(--ease);
 }
 
-.about-pill-list span:hover {
-  color: var(--blossom-deep);
-  border-color: var(--line-strong);
-  transform: translateY(-2px);
-}
-
-.language-list,
-.achievement-list {
+.project-highlights ul {
   display: grid;
-  gap: 10px;
+  gap: 9px;
+  list-style: none;
 }
 
-.language-list div,
-.achievement-list div {
+.project-highlights li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.project-highlights li::before {
+  content: "✿";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 11px;
+  color: var(--blossom);
+}
+
+.project-outcome {
+  margin-top: 18px;
+  padding: 14px 18px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--blossom-deep);
+  background: var(--petal-soft);
+  border-radius: var(--radius-sm);
+}
+
+.project-next {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed var(--line);
+  gap: 16px;
+  padding: 26px;
+  background: var(--surface);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
 }
 
-.language-list div:last-child,
-.achievement-list div:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
+.project-next > a:first-child strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.1;
+  transition: color 0.25s var(--ease);
 }
 
-.language-list span,
-.achievement-list strong {
-  font-size: 14.5px;
-  font-weight: 700;
-}
-
-.language-list small,
-.achievement-list span {
-  font-size: 12.5px;
-  color: var(--ink-faint);
+.project-next > a:first-child:hover strong {
+  color: var(--blossom-deep);
 }
 
 /* ==========================================================================
-   Contact
+   Contact & 404
    ========================================================================== */
 
 .contact-footer {
-  margin: 40px 0 0;
-  padding: 52px 0 30px;
+  margin-top: 40px;
+  padding: 54px 0 30px;
   border-top: 1px solid var(--line);
-  scroll-margin-top: 24px;
+  scroll-margin-top: 82px;
 }
 
 .contact-inner {
@@ -1211,7 +1941,7 @@ button {
   margin: 6px 0 12px;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(36px, 5vw, 64px);
+  font-size: clamp(36px, 5vw, 62px);
   line-height: 1;
 }
 
@@ -1227,44 +1957,34 @@ button {
   gap: 10px;
 }
 
-.email-link,
-.linkedin-link {
-  padding: 13px 24px;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 999px;
-  transition:
-    transform 0.25s var(--ease),
-    box-shadow 0.25s var(--ease),
-    background 0.25s var(--ease);
-}
-
-.email-link {
-  color: #fff;
-  background: linear-gradient(135deg, var(--blossom) 0%, var(--blossom-deep) 100%);
-  box-shadow: var(--shadow-md);
-}
-
-.linkedin-link {
-  color: var(--blossom-deep);
-  background: #fff;
-  border: 1px solid var(--line);
-}
-
-.email-link:hover,
-.linkedin-link:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
-.linkedin-link:hover {
-  background: var(--petal-soft);
-}
-
 .colophon {
   margin-top: 40px;
   font-size: 12.5px;
   color: var(--ink-faint);
+}
+
+.not-found {
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  min-height: 70vh;
+  text-align: center;
+}
+
+.not-found h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 70px);
+  line-height: 1.05;
+}
+
+.not-found p {
+  color: var(--ink-soft);
+}
+
+.not-found .button {
+  justify-self: center;
+  margin-top: 10px;
 }
 
 /* ==========================================================================
@@ -1272,13 +1992,49 @@ button {
    ========================================================================== */
 
 @media (min-width: 700px) {
+  .now-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .project-bento,
-  .experience-grid {
+  .experience-grid,
+  .skills-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .playground-layout {
-    grid-template-columns: 1fr 1fr;
+  /* Languages closes the toolkit grid across the full width. */
+  .skills-wide {
+    grid-column: 1 / -1;
+  }
+
+  /* An odd last card would leave half a row empty, so let it run full width. */
+  .experience-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .language-card .language-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .language-card .language-list div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .also-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .project-body {
+    grid-template-columns: 1fr 1.15fr;
   }
 }
 
@@ -1287,9 +2043,22 @@ button {
     width: min(1180px, calc(100% - 64px));
   }
 
+  .about-grid {
+    grid-template-columns: 380px 1fr;
+    gap: 44px;
+  }
+
+  .credentials-grid {
+    grid-template-columns: 1.05fr 1fr;
+  }
+
+  .playground-layout {
+    grid-template-columns: 1.05fr 1fr;
+  }
+
   .project-bento {
     grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 210px;
+    grid-auto-rows: 200px;
   }
 
   .bento-item.big {
@@ -1302,22 +2071,41 @@ button {
     grid-row: span 2;
   }
 
-  .bento-item.medium,
-  .bento-item.small {
+  .bento-item.medium {
     grid-column: span 3;
     grid-row: span 2;
   }
 
-  .project-card {
+  /* The closing card runs the full width, so no gap is left in the grid. */
+  .bento-item.small {
+    grid-column: span 6;
+    grid-row: span 1;
+  }
+
+  .bento-item.small .project-preview {
+    display: none;
+  }
+
+  .bento-item.small .project-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 26px;
     min-height: 0;
   }
 
-  .playground-layout {
-    grid-template-columns: 1.15fr 1fr;
+  .bento-item.small .project-card-top {
+    flex: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
-  .about-grid {
-    grid-template-columns: 1.05fr 1fr;
+  .bento-item.small .project-card-bottom {
+    flex: 1;
+  }
+
+  .project-card {
+    min-height: 0;
   }
 }
 

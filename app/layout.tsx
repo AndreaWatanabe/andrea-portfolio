@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import PetalField from "@/components/PetalField";
+import SiteNav from "@/components/SiteNav";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -17,9 +19,9 @@ const display = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Andrea Watanabe | Portfolio",
+  title: "Andrea Watanabe | Economics, data & design",
   description:
-    "Portfolio of Andrea Watanabe — economics, data analysis, product strategy, UX/UI, and web projects.",
+    "Portfolio of Andrea Watanabe — economics student at SFU working across data analysis, product strategy, UX/UI, and web projects.",
 };
 
 export const viewport: Viewport = {
@@ -34,7 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body>{children}</body>
+      <body>
+        <PetalField />
+        <SiteNav />
+        {children}
+      </body>
     </html>
   );
 }

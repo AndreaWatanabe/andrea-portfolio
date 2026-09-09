@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
 import { projects, type Project } from "@/data/content";
@@ -15,7 +16,6 @@ function ProjectCard({ project }: { project: Project }) {
     setIndex((current) => (current + 1) % count);
   }, [count]);
 
-  // Previews cycle while the card is hovered or focused, not constantly.
   useEffect(() => {
     if (!hovered || count < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -26,8 +26,15 @@ function ProjectCard({ project }: { project: Project }) {
     };
   }, [hovered, count, advance]);
 
-  const body = (
-    <>
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="project-card"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+    >
       <div className="project-card-top">
         <span className="project-number">{project.number}</span>
         <p className="project-tag">{project.tag}</p>
@@ -45,23 +52,6 @@ function ProjectCard({ project }: { project: Project }) {
               className={`project-photo ${imageIndex === index ? "is-active" : ""}`}
             />
           ))}
-
-          {count > 1 && (
-            <div className="project-dots">
-              {project.images.map((image, dotIndex) => (
-                <button
-                  key={image}
-                  type="button"
-                  className={dotIndex === index ? "is-active" : undefined}
-                  aria-label={`Show preview ${dotIndex + 1} of ${project.title}`}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setIndex(dotIndex);
-                  }}
-                />
-              ))}
-            </div>
-          )}
         </div>
       ) : (
         <div className="project-preview project-preview-empty" aria-hidden="true">
@@ -72,65 +62,34 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="project-card-bottom">
         <h3>
           {project.title}
-          {project.href && <span className="project-arrow" aria-hidden="true">↗</span>}
+          <span className="project-arrow" aria-hidden="true">
+            →
+          </span>
         </h3>
-        <p>{project.description}</p>
+        <p>{project.blurb}</p>
 
         <div className="project-tools">
-          {project.tools.map((tool) => (
+          {project.tools.slice(0, 4).map((tool) => (
             <span key={tool}>{tool}</span>
           ))}
         </div>
       </div>
-    </>
+    </Link>
   );
-
-  const shared = {
-    className: "project-card",
-    onMouseEnter: () => setHovered(true),
-    onMouseLeave: () => setHovered(false),
-    onFocus: () => setHovered(true),
-    onBlur: () => setHovered(false),
-  };
-
-  if (project.href) {
-    return (
-      <a
-        {...shared}
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${project.title} — opens the live prototype in a new tab`}
-      >
-        {body}
-      </a>
-    );
-  }
-
-  return <article {...shared}>{body}</article>;
 }
 
 export default function Projects() {
   return (
-    <section id="work" className="section">
-      <Reveal className="section-title">
-        <p className="section-kicker">
-          <span aria-hidden="true">✿</span> selected projects
-        </p>
-        <h2>Things I designed, built, and shipped</h2>
-      </Reveal>
-
-      <div className="project-bento">
-        {projects.map((project, index) => (
-          <Reveal
-            key={project.title}
-            delay={index * 0.07}
-            className={`bento-item ${project.size}`}
-          >
-            <ProjectCard project={project} />
-          </Reveal>
-        ))}
-      </div>
-    </section>
+    <div className="project-bento">
+      {projects.map((project, index) => (
+        <Reveal
+          key={project.slug}
+          delay={index * 0.05}
+          className={`bento-item ${project.size}`}
+        >
+          <ProjectCard project={project} />
+        </Reveal>
+      ))}
+    </div>
   );
 }
