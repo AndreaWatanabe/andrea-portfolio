@@ -2141,6 +2141,90 @@ body.has-sakura-cursor select {
 }
 
 /* ==========================================================================
+   Experience summary list — front page
+   ========================================================================== */
+
+.exp-list-section {
+  padding-top: 50px;
+}
+
+.exp-list-head {
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.exp-list-head h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 3.8vw, 48px);
+  line-height: 1.05;
+}
+
+.exp-list-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.exp-list {
+  margin-bottom: 26px;
+  list-style: none;
+  text-align: left;
+}
+
+.exp-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.exp-list li:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.exp-list-role {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+}
+
+.exp-list-role strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.exp-list-years {
+  flex: none;
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.exp-sectors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 26px;
+}
+
+.exp-sectors span {
+  padding: 9px 17px;
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.exp-list-cta {
+  display: inline-flex;
+}
+
+/* ==========================================================================
    Featured projects on the landing page
    ========================================================================== */
 
@@ -2718,6 +2802,18 @@ a.feature-row:hover .feature-more span {
 
   .credentials-grid {
     grid-template-columns: 1.05fr 1fr;
+  }
+
+  /* Education and languages stack in the left column; awards and
+     certifications in the right, so neither side runs long. */
+  .credentials-main,
+  .credentials-languages {
+    grid-column: 1;
+  }
+
+  .credentials-side {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 
   .playground-layout {

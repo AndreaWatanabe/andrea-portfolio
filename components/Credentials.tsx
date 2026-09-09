@@ -1,6 +1,6 @@
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
-import { awards, certificates, education } from "@/data/content";
+import { awards, certificates, education, languages } from "@/data/content";
 
 export default function Credentials() {
   return (
@@ -26,6 +26,21 @@ export default function Credentials() {
                 <li key={course}>{course}</li>
               ))}
             </ul>
+          </article>
+        </Reveal>
+
+        <Reveal className="credentials-languages" delay={0.06}>
+          <article className="about-card soft-plum">
+            <p className="card-kicker">communication</p>
+            <h3>Languages</h3>
+            <div className="language-list">
+              {languages.map((language) => (
+                <div key={language.name}>
+                  <span>{language.name}</span>
+                  <small>{language.level}</small>
+                </div>
+              ))}
+            </div>
           </article>
         </Reveal>
 
@@ -59,6 +74,7 @@ export default function Credentials() {
               </div>
             </article>
           </Reveal>
+
         </div>
       </div>
     </section>

@@ -296,6 +296,8 @@ export type Experience = {
   place: string;
   location?: string;
   date: string;
+  /** Compact year range for the summary list. */
+  years: string;
   /** Pulled out into the panel beside the role. */
   highlight: { value?: string; label: string };
   tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
@@ -309,6 +311,7 @@ export const experiences: Experience[] = [
     place: "Consulate General of Mexico",
     location: "Vancouver, BC",
     date: "Summer 2026",
+    years: "2026",
     highlight: {
       value: "~50%",
       label: "less time on recurring email, after building Copilot agents",
@@ -331,6 +334,7 @@ export const experiences: Experience[] = [
     place: "Lean In Network Vancouver",
     location: "Vancouver, BC",
     date: "Jun 2026 — Present",
+    years: "2026—Now",
     highlight: {
       label: "Monthly events, speaker outreach, and a RACI matrix the whole team works from",
     },
@@ -351,6 +355,7 @@ export const experiences: Experience[] = [
     place: "UNICEF SFU",
     location: "Burnaby, BC",
     date: "2025 — Present",
+    years: "2025—Now",
     highlight: {
       value: "$1,500+",
       label: "raised through campus fundraising and awareness events",
@@ -367,6 +372,7 @@ export const experiences: Experience[] = [
     role: "Event Coordinator & Project Manager",
     place: "IterateUX",
     date: "Oct 2024 — May 2025",
+    years: "2024—2025",
     highlight: {
       label: "Monthly professional-development events, planned and delivered end to end",
     },
@@ -384,6 +390,7 @@ export const experiences: Experience[] = [
     role: "Accounting Assistant",
     place: "AN Consulting & Services SAC",
     date: "Dec 2024 — Feb 2025",
+    years: "2024—2025",
     highlight: {
       label: "Reconciliations and balance-sheet review, with discrepancies chased down before reporting",
     },
@@ -396,6 +403,16 @@ export const experiences: Experience[] = [
     ],
     skills: ["Excel", "Reconciliation", "Financial records"],
   },
+];
+
+/** The kinds of places those roles were in. */
+export const sectors = [
+  "government & consular",
+  "non-profit",
+  "UX community",
+  "accounting",
+  "event operations",
+  "data analysis",
 ];
 
 /* ------------------------------------------------------------------ *
@@ -437,31 +454,6 @@ export const certificates = [
 /* ------------------------------------------------------------------ *
  * Skills & languages
  * ------------------------------------------------------------------ */
-
-export const skillGroups = [
-  {
-    label: "Data & analytics",
-    items: ["Excel", "Power BI", "SQL", "R", "Supabase", "Bloomberg", "Capital IQ"],
-  },
-  {
-    label: "Design & build",
-    items: ["Figma", "Framer", "JavaScript", "HTML", "CSS"],
-  },
-  {
-    label: "AI & productivity",
-    items: [
-      "Microsoft Copilot",
-      "Copilot agents",
-      "ChatGPT",
-      "Notion AI",
-      "Oracle Cloud fundamentals",
-    ],
-  },
-  {
-    label: "Business & office",
-    items: ["Word", "PowerPoint", "Project management", "Financial accounting"],
-  },
-];
 
 export const languages = [
   { name: "Spanish", level: "Fluent / professional" },
