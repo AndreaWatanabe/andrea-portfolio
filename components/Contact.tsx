@@ -26,6 +26,14 @@ export default function Contact() {
           >
             LinkedIn ↗
           </a>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-ghost"
+          >
+            GitHub ↗
+          </a>
         </div>
       </Reveal>
 

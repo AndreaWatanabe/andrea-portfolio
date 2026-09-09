@@ -3,20 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { profile } from "@/data/content";
 
-const TABS = [
-  { id: "about", label: "About" },
-  { id: "work", label: "Work" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { id: "play", label: "Play" },
+const PAGES = [
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/play", label: "Play" },
 ];
 
-export default function SiteNav() {
+export default function SiteNav({ resumeHref }: { resumeHref: string | null }) {
   const pathname = usePathname();
-  const onHome = pathname === "/";
-
-  const [active, setActive] = useState("about");
   const [stuck, setStuck] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -27,15 +23,13 @@ export default function SiteNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the mobile menu on Escape, and whenever the viewport grows past
-  // the breakpoint where the full nav takes over.
   useEffect(() => {
     if (!open) return;
 
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
-    const wide = window.matchMedia("(min-width: 760px)");
+    const wide = window.matchMedia("(min-width: 860px)");
     const onWiden = () => {
       if (wide.matches) setOpen(false);
     };
@@ -48,108 +42,140 @@ export default function SiteNav() {
     };
   }, [open]);
 
-  useEffect(() => {
-    if (!onHome) return;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
-    const sections = TABS.map((tab) => document.getElementById(tab.id)).filter(
-      (node): node is HTMLElement => node !== null
-    );
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { threshold: [0.12, 0.4, 0.7], rootMargin: "-20% 0px -50% 0px" }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    // Near the top no section sits in the observed band; pin the first tab.
-    const onScroll = () => {
-      if (window.scrollY < 260) setActive(TABS[0].id);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [onHome]);
+  // Project pages live under /work in spirit, so keep Work lit there too.
+  const workActive = (href: string) =>
+    href === "/work" ? isActive(href) || pathname.startsWith("/projects") : isActive(href);
 
   return (
     <nav className={`site-nav ${stuck || open ? "is-stuck" : ""}`} aria-label="Main">
-      <Link href="/" className="nav-mark" onClick={() => setOpen(false)}>
+      <Link href="/" className="nav-mark">
         <span className="nav-mark-blossom" aria-hidden="true">
           ✿
         </span>
         <span className="nav-mark-text">AW</span>
       </Link>
 
-      {onHome ? (
-        <>
-          <ul className="nav-links">
-            {TABS.map((tab) => (
-              <li key={tab.id}>
-                <a
-                  href={`#${tab.id}`}
-                  className={active === tab.id ? "is-active" : undefined}
-                  aria-current={active === tab.id ? "true" : undefined}
-                >
-                  {tab.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+      <ul className="nav-links">
+        {PAGES.map((page) => (
+          <li key={page.href}>
+            <Link
+              href={page.href}
+              className={workActive(page.href) ? "is-active" : undefined}
+              aria-current={workActive(page.href) ? "page" : undefined}
+            >
+              {page.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
 
-          <a href="#contact" className="nav-cta">
-            Contact
-          </a>
+      <div className="nav-side">
+        <a
+          href={profile.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-icon"
+          aria-label="GitHub profile"
+          title="GitHub"
+        >
+          <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+            />
+          </svg>
+        </a>
 
-          <button
-            type="button"
-            className="nav-toggle"
-            aria-expanded={open}
-            aria-controls="nav-panel"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((value) => !value)}
+        <a
+          href={profile.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-icon"
+          aria-label="LinkedIn profile"
+          title="LinkedIn"
+        >
+          <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M0 1.79C0 .8.83 0 1.85 0h12.3C15.17 0 16 .8 16 1.79v12.42c0 .99-.83 1.79-1.85 1.79H1.85A1.82 1.82 0 0 1 0 14.21V1.79Zm4.94 12.2V6.17H2.4v7.82h2.54Zm-1.27-8.9c.89 0 1.44-.58 1.44-1.31-.02-.75-.55-1.31-1.42-1.31-.87 0-1.44.56-1.44 1.31 0 .73.55 1.31 1.4 1.31h.02Zm5.24 8.9V9.63c0-.23.02-.46.09-.62.18-.46.6-.93 1.31-.93.92 0 1.29.7 1.29 1.73v4.18h2.54V9.51c0-2.35-1.25-3.44-2.93-3.44-1.35 0-1.96.74-2.3 1.27v-1.1H6.37c.03.72 0 7.82 0 7.82h2.54Z"
+            />
+          </svg>
+        </a>
+
+        {resumeHref && (
+          <a
+            href={resumeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-cta nav-cta-ghost"
           >
-            <span className={`nav-toggle-bars ${open ? "is-open" : ""}`} aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </span>
-          </button>
+            Résumé
+          </a>
+        )}
 
-          <div id="nav-panel" className={`nav-panel ${open ? "is-open" : ""}`} hidden={!open}>
-            <ul>
-              {TABS.map((tab) => (
-                <li key={tab.id}>
-                  <a
-                    href={`#${tab.id}`}
-                    className={active === tab.id ? "is-active" : undefined}
-                    onClick={() => setOpen(false)}
-                  >
-                    {tab.label}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a href="#contact" className="nav-panel-cta" onClick={() => setOpen(false)}>
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-        </>
-      ) : (
-        <Link href="/" className="nav-cta nav-back">
-          <span aria-hidden="true">←</span> Back to portfolio
-        </Link>
-      )}
+        <a href={`mailto:${profile.email}`} className="nav-cta nav-contact">
+          Contact
+        </a>
+      </div>
+
+      <button
+        type="button"
+        className="nav-toggle"
+        aria-expanded={open}
+        aria-controls="nav-panel"
+        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span className={`nav-toggle-bars ${open ? "is-open" : ""}`} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </span>
+      </button>
+
+      <div id="nav-panel" className={`nav-panel ${open ? "is-open" : ""}`} hidden={!open}>
+        <ul>
+          {PAGES.map((page) => (
+            <li key={page.href}>
+              <Link
+                href={page.href}
+                className={workActive(page.href) ? "is-active" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {page.label}
+              </Link>
+            </li>
+          ))}
+          <li>
+            <a href={profile.github} target="_blank" rel="noopener noreferrer">
+              GitHub ↗
+            </a>
+          </li>
+          <li>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn ↗
+            </a>
+          </li>
+          {resumeHref && (
+            <li>
+              <a href={resumeHref} target="_blank" rel="noopener noreferrer">
+                Résumé ↗
+              </a>
+            </li>
+          )}
+          <li>
+            <a
+              href={`mailto:${profile.email}`}
+              className="nav-panel-cta"
+              onClick={() => setOpen(false)}
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }

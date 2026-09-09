@@ -5,6 +5,7 @@ export const profile = {
   location: "Vancouver, BC",
   email: "sakurawt32@gmail.com",
   linkedin: "https://www.linkedin.com/in/andreawatanabe/",
+  github: "https://github.com/AndreaWatanabe",
   /** Drop a file at public/photo.jpg to fill the About portrait. */
   photo: "/photo.jpg",
   /** Drop a file at public/resume.pdf to switch on the resume button. */
@@ -48,7 +49,8 @@ export type Project = {
   context: string;
   role: string;
   period: string;
-  size: "big" | "tall" | "medium" | "small";
+  /** Background wash behind the screenshot panel. */
+  tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
   tools: string[];
   images: string[];
   highlights: string[];
@@ -69,7 +71,7 @@ export const projects: Project[] = [
       "Built for Spark Jam 2026. The goal was to take a month of raw spending data and turn it into something a person could actually understand in a few seconds, rather than a spreadsheet they would avoid opening.",
     role: "Data cleaning, design, prototyping",
     period: "2026",
-    size: "big",
+    tint: "blue",
     tools: ["Framer", "Figma", "Excel", "UX/UI"],
     images: [
       "/project-previews/financial-01.png",
@@ -97,7 +99,7 @@ export const projects: Project[] = [
       "A self-directed analytics project built on 4,200 simulated records, modelled on the kind of operational reporting I prepare at work. The question behind it: where does a case actually slow down, and which records can't be trusted?",
     role: "Data modelling and dashboard design",
     period: "In progress",
-    size: "tall",
+    tint: "lilac",
     tools: ["Power BI", "Excel", "Data Analysis"],
     images: [],
     highlights: [
@@ -121,7 +123,7 @@ export const projects: Project[] = [
       "A full build from an empty folder: the learning content, the interface, and the database underneath it. The interesting part was structuring lesson content and user data so they could grow without the whole thing needing a rewrite.",
     role: "Everything — design, front end, database",
     period: "Personal project",
-    size: "medium",
+    tint: "mint",
     tools: ["JavaScript", "HTML", "CSS", "Supabase", "SQL"],
     images: [],
     highlights: [
@@ -143,7 +145,7 @@ export const projects: Project[] = [
       "My entry in the CFAC Stock Pitch Competition. The work was less about the recommendation itself and more about building an argument that held up under questioning — every claim traceable to something in the filings or the market data.",
     role: "Research and presentation",
     period: "Competition",
-    size: "medium",
+    tint: "cream",
     tools: ["Bloomberg", "Capital IQ", "Financial Analysis"],
     images: [],
     highlights: [
@@ -166,7 +168,7 @@ export const projects: Project[] = [
       "Project feedback arrives from many stakeholders, in many places, saying overlapping things. This concept looked at how AI could cluster that feedback so recurring issues and risks become visible instead of getting lost in the pile.",
     role: "Product strategy and finance",
     period: "2026",
-    size: "medium",
+    tint: "peach",
     tools: ["AI Strategy", "Product Strategy", "Research", "PowerPoint"],
     images: [
       "/project-previews/zipboard-01.png",
@@ -193,7 +195,7 @@ export const projects: Project[] = [
       "A large share of the day went to recurring email: the same categories of question, answered the same way. I designed Copilot agents to draft those responses, while keeping a person in the loop wherever the content was sensitive.",
     role: "Design, instruction logic, review",
     period: "2026",
-    size: "medium",
+    tint: "pink",
     tools: ["Microsoft Copilot", "Copilot agents", "Process design"],
     images: [],
     highlights: [
@@ -218,7 +220,7 @@ export const projects: Project[] = [
       "New interns kept asking the same questions, and the answers lived in people's heads rather than anywhere findable. I mapped what was missing and built one place to look it up.",
     role: "Research, information design",
     period: "2026",
-    size: "medium",
+    tint: "blue",
     tools: ["Figma", "Documentation", "Process design"],
     images: [
       "/project-previews/sawp-01.png",
@@ -244,7 +246,7 @@ export const projects: Project[] = [
       "One of the front-end sites I build for growing companies on the side. Tassen Corp needed a clear presence explaining its role as a mediator and importer of raw materials for the plastics industry, aimed at business clients rather than consumers.",
     role: "Design and front-end build",
     period: "Shipped",
-    size: "medium",
+    tint: "mint",
     tools: ["HTML", "CSS", "JavaScript", "Figma", "VS Code"],
     images: [
       "/project-previews/tassen-01.png",
@@ -269,7 +271,7 @@ export const projects: Project[] = [
       "A team case competition run to a tight clock. Analysis, recommendation, and presentation all had to come together fast enough to make the deadline and hold up in front of judges.",
     role: "Analysis and presentation",
     period: "Competition",
-    size: "small",
+    tint: "lilac",
     tools: ["Case analysis", "Presentation", "Teamwork"],
     images: [],
     highlights: [
@@ -294,6 +296,9 @@ export type Experience = {
   place: string;
   location?: string;
   date: string;
+  /** Pulled out into the panel beside the role. */
+  highlight: { value?: string; label: string };
+  tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
   bullets: string[];
   skills: string[];
 };
@@ -303,13 +308,18 @@ export const experiences: Experience[] = [
     role: "Seasonal Agricultural Worker Program Intern",
     place: "Consulate General of Mexico",
     location: "Vancouver, BC",
-    date: "May 2026 — Present",
+    date: "Summer 2026",
+    highlight: {
+      value: "~50%",
+      label: "less time on recurring email, after building Copilot agents",
+    },
+    tint: "pink",
     bullets: [
-      "Maintain and analyze an Excel database of roughly 3,000–5,000 workers and employers",
-      "Prepare monthly reports on worker inflow and program trends",
-      "Enter, update, and validate information in the Mexican EPC system",
-      "Work on health, insurance, and worker-protection cases",
-      "Investigate missing, incomplete, or inconsistent records",
+      "Maintained and analyzed an Excel database of roughly 3,000–5,000 workers and employers",
+      "Prepared monthly reports on worker inflow and program trends",
+      "Entered, updated, and validated information in the Mexican EPC system",
+      "Worked on health, insurance, and worker-protection cases",
+      "Investigated missing, incomplete, or inconsistent records",
       "Built Microsoft Copilot agents for recurring email workflows, cutting handling time by ~50%",
       "Created a Figma protection-case resource now used daily by staff and interns",
       "Supported a FIFA worker-protection awareness campaign with Figma graphics for Instagram",
@@ -321,6 +331,10 @@ export const experiences: Experience[] = [
     place: "Lean In Network Vancouver",
     location: "Vancouver, BC",
     date: "Jun 2026 — Present",
+    highlight: {
+      label: "Monthly events, speaker outreach, and a RACI matrix the whole team works from",
+    },
+    tint: "lilac",
     bullets: [
       "Plan and coordinate monthly events end to end",
       "Conduct speaker outreach",
@@ -337,6 +351,11 @@ export const experiences: Experience[] = [
     place: "UNICEF SFU",
     location: "Burnaby, BC",
     date: "2025 — Present",
+    highlight: {
+      value: "$1,500+",
+      label: "raised through campus fundraising and awareness events",
+    },
+    tint: "mint",
     bullets: [
       "Coordinate campus fundraising and awareness events",
       "Manage venues, catering, supplies, speakers, timelines, and guest experience",
@@ -348,6 +367,10 @@ export const experiences: Experience[] = [
     role: "Event Coordinator & Project Manager",
     place: "IterateUX",
     date: "Oct 2024 — May 2025",
+    highlight: {
+      label: "Monthly professional-development events, planned and delivered end to end",
+    },
+    tint: "blue",
     bullets: [
       "Planned, hosted, and delivered monthly professional-development events",
       "Conducted speaker outreach and coordinated schedules, materials, and attendees",
@@ -361,6 +384,10 @@ export const experiences: Experience[] = [
     role: "Accounting Assistant",
     place: "AN Consulting & Services SAC",
     date: "Dec 2024 — Feb 2025",
+    highlight: {
+      label: "Reconciliations and balance-sheet review, with discrepancies chased down before reporting",
+    },
+    tint: "cream",
     bullets: [
       "Maintained financial records in Excel",
       "Completed bank reconciliations",
@@ -368,22 +395,6 @@ export const experiences: Experience[] = [
       "Investigated discrepancies and corrected inconsistencies before financial reporting",
     ],
     skills: ["Excel", "Reconciliation", "Financial records"],
-  },
-];
-
-/** Shown compactly — real work, less central to the story. */
-export const alsoWorked = [
-  {
-    role: "Kitchen Staff",
-    place: "Homura Yakiniku",
-    date: "Feb — Sep 2025",
-    note: "High-volume kitchen across meat, salad, and stove stations; weekend closing duties.",
-  },
-  {
-    role: "Receptionist & Event Support",
-    place: "Hustle Van Jam",
-    date: "Nov 2024",
-    note: "Guest welcome, ticket verification, cash and POS payments, setup and attendee flow.",
   },
 ];
 
@@ -462,26 +473,43 @@ export const languages = [
  * Personal
  * ------------------------------------------------------------------ */
 
-export const hobbySlides = [
+export type Hobby = {
+  title: string;
+  text: string;
+  image: string;
+  tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
+  /** Where it sits in the bento. */
+  span: "tall" | "wide" | "square";
+};
+
+export const hobbySlides: Hobby[] = [
   {
-    title: "Distance running",
-    text: "BMO Half Marathon finisher — and currently training for Ironman Victoria.",
+    title: "distance running",
+    text: "BMO Half Marathon finisher — now training for Ironman Victoria.",
     image: "/hobbies/running.jpg",
+    tint: "peach",
+    span: "tall",
   },
   {
-    title: "Crochet",
-    text: "Making small things by hand, mostly on the commute.",
+    title: "crochet",
+    text: "Small handmade things, mostly on the commute.",
     image: "/hobbies/crochet.jpg",
+    tint: "cream",
+    span: "wide",
   },
   {
-    title: "Hiking",
-    text: "Exploring trails, mountains, and quiet places in nature.",
+    title: "hiking",
+    text: "Trails, mountains, and quiet places.",
     image: "/hobbies/hiking.jpg",
+    tint: "mint",
+    span: "square",
   },
   {
-    title: "Flute",
-    text: "Trying new styles, and playing with the SFU orchestra club.",
+    title: "flute",
+    text: "New styles, and the SFU orchestra club.",
     image: "/hobbies/music.jpg",
+    tint: "blue",
+    span: "square",
   },
 ];
 

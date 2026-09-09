@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import Reveal from "./Reveal";
 import GrannySquare from "./GrannySquare";
 import { burstPetals } from "./PetalField";
-import { hobbySlides, otherInterests, puzzleSolution, puzzleStart } from "@/data/content";
+import { puzzleSolution, puzzleStart } from "@/data/content";
 
 /** Indexes that clash with another filled cell in the same row, column, or box. */
 function findConflicts(values: (number | null)[]) {
@@ -176,74 +175,14 @@ function Sudoku() {
   );
 }
 
-function Hobbies() {
-  const [slide, setSlide] = useState(0);
-  const current = hobbySlides[slide];
-
-  const go = (direction: number) =>
-    setSlide((value) => (value + direction + hobbySlides.length) % hobbySlides.length);
-
-  return (
-    <article className="hobby-card">
-      <div className="speech">Free time / my time</div>
-
-      <div className="hobby-content">
-        <button type="button" onClick={() => go(-1)} aria-label="Previous hobby">
-          ‹
-        </button>
-
-        <div className="hobby-polaroid" key={current.title}>
-          <div className="hobby-img">
-            <Image
-              src={current.image}
-              alt={current.title}
-              fill
-              sizes="(max-width: 900px) 70vw, 300px"
-            />
-          </div>
-          <h3>{current.title}</h3>
-          <p>{current.text}</p>
-        </div>
-
-        <button type="button" onClick={() => go(1)} aria-label="Next hobby">
-          ›
-        </button>
-      </div>
-
-      <div className="hobby-dots">
-        {hobbySlides.map((hobby, index) => (
-          <button
-            key={hobby.title}
-            type="button"
-            className={index === slide ? "is-active" : undefined}
-            aria-label={hobby.title}
-            onClick={() => setSlide(index)}
-          />
-        ))}
-      </div>
-
-      <div className="hobby-extra">
-        {otherInterests.map((interest) => (
-          <span key={interest}>{interest}</span>
-        ))}
-      </div>
-    </article>
-  );
-}
-
 export default function Playground() {
   return (
     <div className="playground-layout">
-      <div className="playground-column">
-        <Reveal>
-          <Sudoku />
-        </Reveal>
-        <Reveal delay={0.08}>
-          <GrannySquare />
-        </Reveal>
-      </div>
-      <Reveal delay={0.14}>
-        <Hobbies />
+      <Reveal>
+        <Sudoku />
+      </Reveal>
+      <Reveal delay={0.1}>
+        <GrannySquare />
       </Reveal>
     </div>
   );

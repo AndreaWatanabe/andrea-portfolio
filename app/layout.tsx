@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import PetalField from "@/components/PetalField";
 import SiteNav from "@/components/SiteNav";
+import { resumeSrc } from "@/lib/assets";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -38,7 +39,7 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>
         <PetalField />
-        <SiteNav />
+        <SiteNav resumeHref={resumeSrc} />
         {children}
       </body>
     </html>

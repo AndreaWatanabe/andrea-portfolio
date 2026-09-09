@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
 import { projects, type Project } from "@/data/content";
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectRow({ project }: { project: Project }) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const timerRef = useRef<number | null>(null);
@@ -20,7 +20,7 @@ function ProjectCard({ project }: { project: Project }) {
     if (!hovered || count < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    timerRef.current = window.setInterval(advance, 1500);
+    timerRef.current = window.setInterval(advance, 1600);
     return () => {
       if (timerRef.current !== null) window.clearInterval(timerRef.current);
     };
@@ -29,50 +29,50 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="project-card"
+      className="feature-row"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
     >
-      <div className="project-card-top">
-        <span className="project-number">{project.number}</span>
-        <p className="project-tag">{project.tag}</p>
+      <div className="feature-copy">
+        <h3>{project.blurb}</h3>
+
+        <p className="feature-meta">
+          <span className="feature-org">{project.title}</span>
+          {project.tools.slice(0, 4).map((tool) => (
+            <span key={tool} className="tag">
+              {tool}
+            </span>
+          ))}
+        </p>
+
+        <span className="feature-more">
+          Read the case <span aria-hidden="true">→</span>
+        </span>
       </div>
 
-      {count > 0 ? (
-        <div className="project-preview">
-          {project.images.map((image, imageIndex) => (
+      <div className={`feature-panel tint-${project.tint} ${count === 0 ? "is-callout" : ""}`}>
+        {count > 0 ? (
+          project.images.map((image, imageIndex) => (
             <Image
               key={image}
               src={image}
               alt={`${project.title} preview ${imageIndex + 1}`}
               fill
-              sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
-              className={`project-photo ${imageIndex === index ? "is-active" : ""}`}
+              sizes="(max-width: 900px) 100vw, 46vw"
+              className={`feature-shot ${imageIndex === index ? "is-active" : ""}`}
             />
-          ))}
-        </div>
-      ) : (
-        <div className="project-preview project-preview-empty" aria-hidden="true">
-          <span>✿</span>
-        </div>
-      )}
-
-      <div className="project-card-bottom">
-        <h3>
-          {project.title}
-          <span className="project-arrow" aria-hidden="true">
-            →
-          </span>
-        </h3>
-        <p>{project.blurb}</p>
-
-        <div className="project-tools">
-          {project.tools.slice(0, 4).map((tool) => (
-            <span key={tool}>{tool}</span>
-          ))}
-        </div>
+          ))
+        ) : (
+          /* No screenshot yet: carry the result instead of empty space. */
+          <div className="callout">
+            <span className="feature-mark" aria-hidden="true">
+              {project.number}
+            </span>
+            <p>{project.outcome ?? project.highlights[0]}</p>
+          </div>
+        )}
       </div>
     </Link>
   );
@@ -80,14 +80,10 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Projects() {
   return (
-    <div className="project-bento">
+    <div className="feature-stack">
       {projects.map((project, index) => (
-        <Reveal
-          key={project.slug}
-          delay={index * 0.05}
-          className={`bento-item ${project.size}`}
-        >
-          <ProjectCard project={project} />
+        <Reveal key={project.slug} delay={Math.min(index, 3) * 0.06}>
+          <ProjectRow project={project} />
         </Reveal>
       ))}
     </div>
