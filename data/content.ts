@@ -310,7 +310,7 @@ export const experiences: Experience[] = [
     role: "Seasonal Agricultural Worker Program Intern",
     place: "Consulate General of Mexico",
     location: "Vancouver, BC",
-    date: "Summer 2026",
+    date: "May 2026 — Aug 2026",
     years: "2026",
     highlight: {
       value: "~50%",
