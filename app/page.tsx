@@ -1,10 +1,14 @@
+import Contact from "@/components/Contact";
+import FeaturedProjects from "@/components/FeaturedProjects";
 import Landing from "@/components/Landing";
-import { hasResume, resumeSrc } from "@/lib/assets";
+import { resumeSrc } from "@/lib/assets";
 
 export default function Home() {
   return (
-    <main className="page landing-page">
-      <Landing hasResume={hasResume} resumeHref={resumeSrc} />
+    <main className="page">
+      <Landing resumeHref={resumeSrc} />
+      <FeaturedProjects />
+      <Contact />
     </main>
   );
 }

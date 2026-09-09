@@ -1516,7 +1516,9 @@ button {
 .sudoku-grid input.is-given {
   color: var(--ink);
   background: rgba(255, 255, 255, 0.55);
-  cursor: default;
+  /* Follows the page: hidden while the sakura cursor is on, arrow otherwise.
+     A fixed `default` here would show the OS arrow on top of the flower. */
+  cursor: inherit;
 }
 
 .sudoku-grid input.is-related {
@@ -1988,114 +1990,57 @@ button {
 }
 
 /* ==========================================================================
-   Landing page — crochet sakura
+   Sakura cursor
    ========================================================================== */
 
-.landing-page {
+/* Only applied once the cursor component decides this is a mouse-driven,
+   motion-friendly device. */
+body.has-sakura-cursor,
+body.has-sakura-cursor a,
+body.has-sakura-cursor button,
+body.has-sakura-cursor [role="button"] {
+  cursor: none;
+}
+
+/* Typing still needs a real caret. */
+body.has-sakura-cursor input,
+body.has-sakura-cursor textarea,
+body.has-sakura-cursor select {
+  cursor: text;
+}
+
+.sakura-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
   display: grid;
   place-items: center;
-  min-height: calc(100dvh - 96px);
+  pointer-events: none;
+  will-change: transform;
+  filter: drop-shadow(0 3px 6px rgba(198, 90, 132, 0.3));
 }
+
+.sakura-cursor svg {
+  transition: transform 0.22s var(--ease);
+}
+
+/* Grows a little over anything clickable. */
+.sakura-cursor.is-over svg {
+  transform: scale(1.45);
+}
+
+.sakura-cursor.is-pressed svg {
+  transform: scale(0.85);
+}
+
+/* ==========================================================================
+   Landing page
+   ========================================================================== */
 
 .landing {
-  padding: 20px 0 60px;
+  padding: 46px 0 20px;
   text-align: center;
-}
-
-.landing-flower {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-
-.crochet-sakura {
-  position: relative;
-  display: block;
-  width: clamp(180px, 26vw, 260px);
-  aspect-ratio: 1;
-  padding: 0;
-  border-radius: 50%;
-  transition: transform 0.4s var(--ease);
-}
-
-.crochet-sakura svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 14px 26px rgba(198, 90, 132, 0.22));
-}
-
-.crochet-sakura:hover {
-  transform: scale(1.04) rotate(-4deg);
-}
-
-.crochet-sakura:active {
-  transform: scale(0.97) rotate(3deg);
-}
-
-.sakura-bloom {
-  animation: bloom-breathe 7s ease-in-out infinite;
-}
-
-/* Placement is done with the SVG transform attribute; CSS only animates each
-   petal growing in place, about its own box. */
-.sakura-petal,
-.sakura-centre,
-.sakura-bloom {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.sakura-petal {
-  animation: petal-stitch 0.7s var(--ease) backwards;
-}
-
-@keyframes petal-stitch {
-  from {
-    opacity: 0;
-    transform: scale(0.35);
-  }
-}
-
-.sakura-centre {
-  animation: knot-pop 0.5s 1.05s var(--ease) backwards;
-}
-
-@keyframes knot-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.2);
-  }
-}
-
-@keyframes bloom-breathe {
-  50% {
-    transform: scale(1.02);
-  }
-}
-
-.sakura-hint {
-  position: absolute;
-  left: 50%;
-  bottom: -6px;
-  transform: translateX(-50%);
-  padding: 5px 13px;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--blossom-deep);
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: var(--shadow-sm);
-  opacity: 0;
-  transition: opacity 0.3s var(--ease);
-}
-
-.crochet-sakura:hover .sakura-hint,
-.crochet-sakura:focus-visible .sakura-hint {
-  opacity: 1;
 }
 
 .landing-greeting {
@@ -2161,6 +2106,119 @@ button {
   justify-content: center;
   gap: 10px;
   animation: soft-rise 0.9s 1.86s var(--ease) backwards;
+}
+
+/* Currently, inline on the landing page. */
+.landing-now {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  max-width: 980px;
+  margin: 46px auto 0;
+  padding: 24px 26px;
+  text-align: left;
+  list-style: none;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(255, 234, 241, 0.8));
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+  animation: soft-rise 0.9s 1.1s var(--ease) backwards;
+}
+
+.landing-now li {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.landing-now strong {
+  display: block;
+  font-size: 15px;
+}
+
+.landing-now p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Featured projects on the landing page
+   ========================================================================== */
+
+.featured-section {
+  padding-top: 44px;
+}
+
+.featured-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.featured-head h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(29px, 3.6vw, 46px);
+  line-height: 1.06;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.featured-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  padding: 18px;
+  background: rgba(255, 253, 254, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.featured-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.featured-thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 11;
+  margin-bottom: 4px;
+  background: linear-gradient(150deg, var(--wash-a), var(--wash-b));
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.featured-thumb img {
+  object-fit: contain;
+  padding: 14px;
+}
+
+.featured-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1.12;
+}
+
+.featured-card > p {
+  flex: 1;
+  font-size: 14px;
+  color: var(--ink-soft);
 }
 
 /* ==========================================================================
@@ -2633,6 +2691,14 @@ a.feature-row:hover .feature-more span {
 
   .hobby-tile.span-wide {
     grid-column: span 2;
+  }
+
+  .landing-now {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .featured-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .project-body {

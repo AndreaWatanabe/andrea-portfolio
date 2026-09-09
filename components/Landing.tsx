@@ -1,19 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import CrochetSakura from "./CrochetSakura";
-import { profile } from "@/data/content";
+import { nowItems, profile } from "@/data/content";
 
-export default function Landing({ hasResume, resumeHref }: {
-  hasResume: boolean;
-  resumeHref: string | null;
-}) {
+export default function Landing({ resumeHref }: { resumeHref: string | null }) {
   return (
     <section className="landing">
-      <div className="landing-flower">
-        <CrochetSakura />
-      </div>
-
       <p className="landing-greeting">Hey — I&rsquo;m</p>
 
       <h1 className="landing-name">
@@ -28,7 +20,7 @@ export default function Landing({ hasResume, resumeHref }: {
               <span
                 key={index}
                 className="hero-letter"
-                style={{ animationDelay: `${1.15 + index * 0.03}s` }}
+                style={{ animationDelay: `${0.2 + index * 0.03}s` }}
               >
                 {character}
               </span>
@@ -40,14 +32,14 @@ export default function Landing({ hasResume, resumeHref }: {
       <p className="landing-tagline">{profile.tagline}</p>
 
       <div className="landing-links">
-        <Link href="/work" className="button button-primary">
-          See my work
+        <Link href="/projects" className="button button-primary">
+          See my projects
+        </Link>
+        <Link href="/experience" className="button button-ghost">
+          Experience
         </Link>
         <Link href="/about" className="button button-ghost">
           About me
-        </Link>
-        <Link href="/play" className="button button-ghost">
-          Play
         </Link>
       </div>
 
@@ -58,7 +50,7 @@ export default function Landing({ hasResume, resumeHref }: {
         <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
           LinkedIn ↗
         </a>
-        {hasResume && resumeHref && (
+        {resumeHref && (
           <a href={resumeHref} target="_blank" rel="noopener noreferrer">
             Résumé ↗
           </a>
@@ -72,7 +64,22 @@ export default function Landing({ hasResume, resumeHref }: {
           Open to co-op roles
         </span>
         <span className="hero-place">{profile.location}</span>
+        <span className="hero-place">Economics @ SFU</span>
       </div>
+
+      <ul className="landing-now">
+        {nowItems.map((item) => (
+          <li key={item.title}>
+            <span className="now-icon" aria-hidden="true">
+              {item.icon}
+            </span>
+            <div>
+              <strong>{item.title}</strong>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

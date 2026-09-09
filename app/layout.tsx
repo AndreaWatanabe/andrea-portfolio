@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import PetalField from "@/components/PetalField";
+import SakuraCursor from "@/components/SakuraCursor";
 import SiteNav from "@/components/SiteNav";
 import { resumeSrc } from "@/lib/assets";
 import "./globals.css";
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body>
         <PetalField />
+        <SakuraCursor />
         <SiteNav resumeHref={resumeSrc} />
         {children}
       </body>

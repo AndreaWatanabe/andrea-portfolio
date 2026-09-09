@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { profile } from "@/data/content";
 
 const PAGES = [
-  { href: "/work", label: "Work" },
+  { href: "/projects", label: "Projects" },
+  { href: "/experience", label: "Experience" },
   { href: "/about", label: "About" },
   { href: "/play", label: "Play" },
 ];
@@ -44,9 +45,6 @@ export default function SiteNav({ resumeHref }: { resumeHref: string | null }) {
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
-  // Project pages live under /work in spirit, so keep Work lit there too.
-  const workActive = (href: string) =>
-    href === "/work" ? isActive(href) || pathname.startsWith("/projects") : isActive(href);
 
   return (
     <nav className={`site-nav ${stuck || open ? "is-stuck" : ""}`} aria-label="Main">
@@ -62,8 +60,8 @@ export default function SiteNav({ resumeHref }: { resumeHref: string | null }) {
           <li key={page.href}>
             <Link
               href={page.href}
-              className={workActive(page.href) ? "is-active" : undefined}
-              aria-current={workActive(page.href) ? "page" : undefined}
+              className={isActive(page.href) ? "is-active" : undefined}
+              aria-current={isActive(page.href) ? "page" : undefined}
             >
               {page.label}
             </Link>
@@ -141,7 +139,7 @@ export default function SiteNav({ resumeHref }: { resumeHref: string | null }) {
             <li key={page.href}>
               <Link
                 href={page.href}
-                className={workActive(page.href) ? "is-active" : undefined}
+                className={isActive(page.href) ? "is-active" : undefined}
                 onClick={() => setOpen(false)}
               >
                 {page.label}
