@@ -6,10 +6,6 @@ export const profile = {
   email: "sakurawt32@gmail.com",
   linkedin: "https://www.linkedin.com/in/andreawatanabe/",
   github: "https://github.com/AndreaWatanabe",
-  /** Drop a file at public/photo.jpg to fill the About portrait. */
-  photo: "/photo.jpg",
-  /** Drop a file at public/resume.pdf to switch on the resume button. */
-  resume: "/resume.pdf",
 };
 
 /* ------------------------------------------------------------------ *
