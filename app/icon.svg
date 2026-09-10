@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Sakura</title>
+  <defs>
+    <radialGradient id="p" cx="50%" cy="82%" r="70%">
+      <stop offset="0%" stop-color="#ffe9f1" />
+      <stop offset="65%" stop-color="#ffc4da" />
+      <stop offset="100%" stop-color="#f4739b" />
+    </radialGradient>
+  </defs>
+
+  <!-- Five petals around the centre. Outlines are solid rather than dashed:
+       a chain-stitch dash pattern turns to mush at 16px. -->
+  <g transform="translate(32 32)">
+    <g transform="rotate(0)">
+      <path d="M0 -4C6 -11 11 -19 6 -25C3 -28.5 -3 -28.5 -6 -25C-11 -19 -6 -11 0 -4Z"
+            fill="url(#p)" stroke="#e8629a" stroke-width="2" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(72)">
+      <path d="M0 -4C6 -11 11 -19 6 -25C3 -28.5 -3 -28.5 -6 -25C-11 -19 -6 -11 0 -4Z"
+            fill="url(#p)" stroke="#e8629a" stroke-width="2" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(144)">
+      <path d="M0 -4C6 -11 11 -19 6 -25C3 -28.5 -3 -28.5 -6 -25C-11 -19 -6 -11 0 -4Z"
+            fill="url(#p)" stroke="#e8629a" stroke-width="2" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(216)">
+      <path d="M0 -4C6 -11 11 -19 6 -25C3 -28.5 -3 -28.5 -6 -25C-11 -19 -6 -11 0 -4Z"
+            fill="url(#p)" stroke="#e8629a" stroke-width="2" stroke-linejoin="round" />
+    </g>
+    <g transform="rotate(288)">
+      <path d="M0 -4C6 -11 11 -19 6 -25C3 -28.5 -3 -28.5 -6 -25C-11 -19 -6 -11 0 -4Z"
+            fill="url(#p)" stroke="#e8629a" stroke-width="2" stroke-linejoin="round" />
+    </g>
+
+    <!-- French-knot centre -->
+    <circle r="6.5" fill="#fbd97d" stroke="#e0a92e" stroke-width="1.8" />
+  </g>
+</svg>
