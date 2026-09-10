@@ -3,7 +3,7 @@ import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import PetalField from "@/components/PetalField";
 import SakuraCursor from "@/components/SakuraCursor";
 import SiteNav from "@/components/SiteNav";
-import { resumeSrc } from "@/lib/assets";
+import { getResumeSrc } from "@/lib/assets";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -41,7 +41,7 @@ export default function RootLayout({
       <body>
         <PetalField />
         <SakuraCursor />
-        <SiteNav resumeHref={resumeSrc} />
+        <SiteNav resumeHref={getResumeSrc()} />
         {children}
       </body>
     </html>

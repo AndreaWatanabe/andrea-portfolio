@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
-import { hasPhoto, hasResume, photoSrc, resumeSrc } from "@/lib/assets";
+import { getPhotoSrc, getResumeSrc } from "@/lib/assets";
 import { education, profile } from "@/data/content";
 
 export default function About() {
+  const photoSrc = getPhotoSrc();
+  const resumeSrc = getResumeSrc();
+
   return (
     <section id="about" className="section about-intro">
       <div className="intro-grid">
@@ -53,7 +56,7 @@ export default function About() {
             <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="button button-ghost">
               LinkedIn ↗
             </a>
-            {hasResume && resumeSrc && (
+            {resumeSrc && (
               <a
                 href={resumeSrc}
                 download="Andrea-Watanabe-Resume.pdf"
@@ -67,7 +70,7 @@ export default function About() {
 
         <Reveal className="intro-photo-wrap" delay={0.08}>
           <div className="intro-photo">
-            {hasPhoto && photoSrc ? (
+            {photoSrc ? (
               <Image
                 src={photoSrc}
                 alt={profile.name}
