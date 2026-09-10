@@ -105,11 +105,10 @@ export default function SiteNav({ resumeHref }: { resumeHref: string | null }) {
         {resumeHref && (
           <a
             href={resumeHref}
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Andrea-Watanabe-Resume.pdf"
             className="nav-cta nav-cta-ghost"
           >
-            Résumé
+            CV ↓
           </a>
         )}
 
@@ -158,8 +157,8 @@ export default function SiteNav({ resumeHref }: { resumeHref: string | null }) {
           </li>
           {resumeHref && (
             <li>
-              <a href={resumeHref} target="_blank" rel="noopener noreferrer">
-                Résumé ↗
+              <a href={resumeHref} download="Andrea-Watanabe-Resume.pdf">
+                Download CV ↓
               </a>
             </li>
           )}

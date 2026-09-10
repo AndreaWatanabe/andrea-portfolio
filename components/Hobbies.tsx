@@ -31,6 +31,7 @@ export default function Hobbies() {
       </div>
 
       <Reveal className="interest-strip" delay={0.2}>
+        <p className="card-kicker">and also</p>
         <div className="interest-chips">
           {otherInterests.map((interest) => (
             <span key={interest}>{interest}</span>

@@ -51,8 +51,8 @@ export default function Landing({ resumeHref }: { resumeHref: string | null }) {
           LinkedIn ↗
         </a>
         {resumeHref && (
-          <a href={resumeHref} target="_blank" rel="noopener noreferrer">
-            Résumé ↗
+          <a href={resumeHref} download="Andrea-Watanabe-Resume.pdf">
+            Download CV ↓
           </a>
         )}
         <a href={`mailto:${profile.email}`}>Email ↗</a>
@@ -61,7 +61,7 @@ export default function Landing({ resumeHref }: { resumeHref: string | null }) {
       <div className="landing-meta">
         <span className="hero-status">
           <span className="status-dot" aria-hidden="true" />
-          Open to co-op roles
+          Open to work
         </span>
         <span className="hero-place">{profile.location}</span>
         <span className="hero-place">Economics @ SFU</span>

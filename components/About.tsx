@@ -54,8 +54,12 @@ export default function About() {
               LinkedIn ↗
             </a>
             {hasResume && resumeSrc && (
-              <a href={resumeSrc} target="_blank" rel="noopener noreferrer" className="button button-primary">
-                Résumé ↗
+              <a
+                href={resumeSrc}
+                download="Andrea-Watanabe-Resume.pdf"
+                className="button button-primary"
+              >
+                Download my CV ↓
               </a>
             )}
           </div>
