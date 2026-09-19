@@ -90,9 +90,9 @@ export const projects: Project[] = [
     title: "Operational Performance Dashboard",
     tag: "Power BI · In progress",
     blurb:
-      "A two-page Power BI dashboard over 4,200 records, tracking flow, timing, and data quality.",
+      "A two-page Power BI dashboard over 4,200 records, tracking flow, timing, and data quality. Still building.",
     context:
-      "A self-directed analytics project built on 4,200 simulated records, modelled on the kind of operational reporting I prepare at work. The question behind it: where does a case actually slow down, and which records can't be trusted?",
+      "A self-directed analytics project built on 4,200 simulated records, modelled on the kind of operational reporting I prepare at work. The question behind it: where does a case actually slow down, and which records can't be trusted? Still in progress — I'm building it out page by page.",
     role: "Data modelling and dashboard design",
     period: "In progress",
     tint: "lilac",
@@ -131,31 +131,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "salesforce-stock-pitch",
-    number: "04",
-    title: "Salesforce Stock Pitch",
-    tag: "CFAC Stock Pitch Competition",
-    blurb:
-      "A researched investment thesis on Salesforce, built with Bloomberg and Capital IQ.",
-    context:
-      "My entry in the CFAC Stock Pitch Competition. The work was less about the recommendation itself and more about building an argument that held up under questioning — every claim traceable to something in the filings or the market data.",
-    role: "Research and presentation",
-    period: "Competition",
-    tint: "cream",
-    tools: ["Bloomberg", "Capital IQ", "Financial Analysis"],
-    images: [],
-    highlights: [
-      "Researched Salesforce as a company and as a position",
-      "Conducted company, market, and industry analysis",
-      "Used Bloomberg and Capital IQ for financial and market research",
-      "Reviewed financial and market information for the thesis",
-      "Developed an investment thesis from that evidence",
-      "Presented an evidence-based recommendation to judges",
-    ],
-  },
-  {
     slug: "zipboard-ai-feedback",
-    number: "05",
+    number: "04",
     title: "zipBoard AI Feedback Intelligence",
     tag: "AI & product strategy",
     blurb:
@@ -181,33 +158,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "consulate-copilot-agents",
-    number: "06",
-    title: "Copilot Agents for Case Email",
-    tag: "Internal tooling · ~50% time saved",
-    blurb:
-      "Microsoft Copilot agents that cut my email handling time roughly in half.",
-    context:
-      "A large share of the day went to recurring email: the same categories of question, answered the same way. I designed Copilot agents to draft those responses, while keeping a person in the loop wherever the content was sensitive.",
-    role: "Design, instruction logic, review",
-    period: "2026",
-    tint: "pink",
-    tools: ["Microsoft Copilot", "Copilot agents", "Process design"],
-    images: [],
-    highlights: [
-      "Designed Microsoft Copilot agents for recurring email workflows",
-      "Structured the instructions and response logic behind each agent",
-      "Improved response consistency and accuracy",
-      "Reduced email-handling time by approximately 50%",
-      "Reviewed AI-generated responses for accuracy, tone, context, and confidentiality",
-      "Kept human review in place for sensitive information and final responses",
-    ],
-    outcome:
-      "Roughly half the time previously spent on recurring email went back into case work.",
-  },
-  {
     slug: "protection-case-documentation",
-    number: "07",
+    number: "05",
     title: "Protection-Case Documentation System",
     tag: "Used daily by the team",
     blurb:
@@ -233,7 +185,7 @@ export const projects: Project[] = [
   },
   {
     slug: "tassen-corp-website",
-    number: "08",
+    number: "06",
     title: "Tassen Corp Website",
     tag: "Side hustle · Shipped",
     blurb:
@@ -255,28 +207,7 @@ export const projects: Project[] = [
       "Presented the company, its services, and its role as a mediator and importer of raw materials for the plastics industry",
       "Shaped the content for a business audience",
     ],
-  },
-  {
-    slug: "bass-case-competition",
-    number: "09",
-    title: "BASS Case Competition",
-    tag: "Finalist",
-    blurb:
-      "Reached the final round with a team, on a deadline, with an evidence-based recommendation.",
-    context:
-      "A team case competition run to a tight clock. Analysis, recommendation, and presentation all had to come together fast enough to make the deadline and hold up in front of judges.",
-    role: "Analysis and presentation",
-    period: "Competition",
-    tint: "lilac",
-    tools: ["Case analysis", "Presentation", "Teamwork"],
-    images: [],
-    highlights: [
-      "Analyzed a business problem as part of a team",
-      "Developed an evidence-based recommendation",
-      "Prepared and delivered a presentation under competition deadlines",
-    ],
-    outcome: "Reached the final round.",
-  },
+  }
 ];
 
 export function projectBySlug(slug: string) {
