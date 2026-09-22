@@ -358,9 +358,12 @@ export const education = {
   concentration: "Concentration in Data Analysis",
   graduation: "Expected December 2027",
   coursework: [
+    "ECON 305",
     "ECON 333 — Statistical Analysis of Economic Data / Econometrics",
-    "Business Statistics",
+    "ECON 334",
+    "STAT 452",
     "Introduction to R for Data Science",
+    "Business Statistics",
     "Project Management",
     "Financial Accounting",
     "Business Technology Management",
@@ -402,8 +405,6 @@ export type Hobby = {
   text: string;
   image: string;
   tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
-  /** Where it sits in the bento. */
-  span: "tall" | "wide" | "square";
 };
 
 export const hobbySlides: Hobby[] = [
@@ -412,30 +413,24 @@ export const hobbySlides: Hobby[] = [
     text: "BMO Half Marathon finisher — now training for Ironman Victoria.",
     image: "/hobbies/running.jpg",
     tint: "peach",
-    span: "tall",
   },
   {
-    // Wide slot suits the vista: the crop keeps the mountains and the sound.
     title: "hiking",
     text: "Trails, mountains, and quiet places.",
     image: "/hobbies/hiking.jpg",
     tint: "mint",
-    span: "wide",
   },
   {
-    // Portrait source, so a square crops it far less than the wide slot did.
     title: "crochet",
     text: "Small handmade things, mostly on the commute.",
     image: "/hobbies/crochet.jpg",
     tint: "lilac",
-    span: "square",
   },
   {
     title: "flute",
     text: "New styles, and the SFU orchestra club.",
     image: "/hobbies/music.jpg",
     tint: "blue",
-    span: "square",
   },
 ];
 

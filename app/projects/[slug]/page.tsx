@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import { getImageSize } from "@/lib/imageSize";
 import { projectBySlug, projects } from "@/data/content";
 
 export function generateStaticParams() {
@@ -68,16 +69,21 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
       {project.images.length > 0 && (
         <Reveal className="project-gallery">
-          {project.images.map((image, index) => (
-            <figure key={image}>
-              <Image
-                src={image}
-                alt={`${project.title} — view ${index + 1}`}
-                fill
-                sizes="(max-width: 900px) 100vw, 33vw"
-              />
-            </figure>
-          ))}
+          {project.images.map((image, index) => {
+            const { width, height } = getImageSize(image);
+
+            return (
+              <figure key={image}>
+                <Image
+                  src={image}
+                  alt={`${project.title} — view ${index + 1}`}
+                  width={width}
+                  height={height}
+                  sizes={index === 0 ? "(max-width: 700px) 92vw, 90vw" : "(max-width: 700px) 92vw, 46vw"}
+                />
+              </figure>
+            );
+          })}
         </Reveal>
       )}
 

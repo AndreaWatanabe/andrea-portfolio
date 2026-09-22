@@ -1808,13 +1808,12 @@ button {
 .project-gallery {
   display: grid;
   grid-template-columns: 1fr;
+  align-items: start;
   gap: 16px;
   margin-bottom: 44px;
 }
 
 .project-gallery figure {
-  position: relative;
-  aspect-ratio: 4 / 3;
   padding: 12px;
   background: linear-gradient(150deg, #fff, var(--petal-soft));
   border: 1px solid var(--line);
@@ -1823,10 +1822,13 @@ button {
   overflow: hidden;
 }
 
-/* Screenshots are the point here, so show the whole frame rather than crop it. */
+/* Each screenshot keeps its own proportions: no crop, and no letterbox
+   bars from forcing it into a fixed box. */
 .project-gallery img {
-  object-fit: contain;
-  padding: 12px;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
 }
 
 .project-body {
@@ -2613,7 +2615,7 @@ a.feature-row:hover .feature-more span {
 }
 
 /* ==========================================================================
-   Hobbies bento
+   Hobbies — a wall of photos at their own proportions
    ========================================================================== */
 
 .hobbies-section {
@@ -2632,20 +2634,21 @@ a.feature-row:hover .feature-more span {
   line-height: 1.06;
 }
 
-.hobby-bento {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+/* Columns rather than a grid: each photo keeps its own height instead of
+   being cropped to a shared row. */
+.hobby-wall {
+  columns: 1;
+  column-gap: 16px;
 }
 
 .hobby-tile {
-  display: flex;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 16px;
 }
 
 .hobby-frame {
   position: relative;
-  flex: 1;
-  min-height: 240px;
   background: linear-gradient(150deg, var(--wash-a), var(--wash-b));
   border-radius: 22px;
   overflow: hidden;
@@ -2653,7 +2656,9 @@ a.feature-row:hover .feature-more span {
 }
 
 .hobby-frame img {
-  object-fit: cover;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hobby-frame:hover {
@@ -2661,7 +2666,6 @@ a.feature-row:hover .feature-more span {
   box-shadow: var(--shadow-md);
 }
 
-/* The floating label pill, in mono like the reference. */
 .hobby-pill {
   position: absolute;
   top: 16px;
@@ -2769,15 +2773,10 @@ a.feature-row:hover .feature-more span {
 
   .project-gallery figure:first-child {
     grid-column: 1 / -1;
-    aspect-ratio: 16 / 9;
   }
 
-  .hobby-bento {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .hobby-tile.span-wide {
-    grid-column: span 2;
+  .hobby-wall {
+    columns: 2;
   }
 
   .landing-now {
@@ -2834,29 +2833,6 @@ a.feature-row:hover .feature-more span {
     gap: 50px;
   }
 
-  /* Tall tile on the left, a wide one and two squares filling the right. */
-  .hobby-bento {
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 230px;
-  }
-
-  /* Let the grid rows set the height here; the min-height is only for the
-     stacked single-column layout, and would push the rows out of line. */
-  .hobby-frame {
-    min-height: 0;
-  }
-
-  .hobby-tile.span-tall {
-    grid-row: span 2;
-  }
-
-  .hobby-tile.span-wide {
-    grid-column: span 2;
-  }
-
-  .hobby-tile.span-square {
-    grid-column: span 1;
-  }
 
   .project-bento {
     grid-template-columns: repeat(6, 1fr);
