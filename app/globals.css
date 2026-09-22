@@ -2661,6 +2661,12 @@ a.feature-row:hover .feature-more span {
   height: auto;
 }
 
+/* A cropped tile fills a fixed frame instead of keeping its own height. */
+.hobby-frame.is-cropped img {
+  height: 100%;
+  object-fit: cover;
+}
+
 .hobby-frame:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);

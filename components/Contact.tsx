@@ -38,8 +38,7 @@ export default function Contact() {
       </Reveal>
 
       <p className="colophon">
-        Built with Next.js · <span aria-hidden="true">✿</span>{" "}
-        {new Date().getFullYear()} {profile.name}
+        <span aria-hidden="true">✿</span> {new Date().getFullYear()} {profile.name}
       </p>
     </section>
   );

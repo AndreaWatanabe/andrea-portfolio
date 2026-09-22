@@ -405,6 +405,11 @@ export type Hobby = {
   text: string;
   image: string;
   tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
+  /**
+   * Most photos show at their own height. Set this to crop one instead —
+   * `aspect` is width/height of the frame, `focus` the object-position.
+   */
+  crop?: { aspect: string; focus?: string };
 };
 
 export const hobbySlides: Hobby[] = [
@@ -431,6 +436,8 @@ export const hobbySlides: Hobby[] = [
     text: "New styles, and the SFU orchestra club.",
     image: "/hobbies/music.jpg",
     tint: "blue",
+    // Cropped in on the score; the full frame includes the rest of the room.
+    crop: { aspect: "4 / 3", focus: "50% 42%" },
   },
 ];
 
