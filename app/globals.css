@@ -2761,8 +2761,15 @@ a.feature-row:hover .feature-more span {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  /* Lead image spans the row, the rest pair up. Works for any count —
+     1, 3 and 5 images all land without a hole in the grid. */
   .project-gallery {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-gallery figure:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
   }
 
   .hobby-bento {

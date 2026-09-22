@@ -109,25 +109,34 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "pollito-world",
+    slug: "pollito-word-boost",
     number: "03",
-    title: "Pollito World",
-    tag: "English-learning platform",
+    title: "Pollito Word Boost",
+    tag: "Spanish → English · Built for my family",
     blurb:
-      "An English-learning platform built from scratch, database and all.",
+      "A bilingual vocabulary app I built from scratch — database, practice engine and all.",
     context:
-      "A full build from an empty folder: the learning content, the interface, and the database underneath it. The interesting part was structuring lesson content and user data so they could grow without the whole thing needing a rewrite.",
+      "Built so my mum and grandma could learn English a little at a time: gentle reminders, useful words, steady practice. A full build from an empty folder — the learning content, the interface, and the database underneath it. The interesting part was structuring vocabulary and user progress so both could grow without the whole thing needing a rewrite.",
     role: "Everything — design, front end, database",
     period: "Personal project",
     tint: "mint",
     tools: ["JavaScript", "HTML", "CSS", "Supabase", "SQL"],
-    images: [],
+    images: [
+      "/project-previews/pollito-01.jpg",
+      "/project-previews/pollito-02.jpg",
+      "/project-previews/pollito-03.jpg",
+      "/project-previews/pollito-04.jpg",
+      "/project-previews/pollito-05.jpg",
+    ],
     highlights: [
-      "Built the platform from scratch",
-      "Designed and created the database in Supabase",
-      "Wrote SQL queries to store, retrieve, and manage information",
-      "Organized structured learning content alongside user data",
-      "Built the interface with JavaScript, HTML, and CSS",
+      "Built the platform from scratch, front end and back",
+      "Designed and created the database in Supabase, with accounts and sign-in",
+      "Wrote SQL queries to store, retrieve, and manage vocabulary and progress",
+      "Organized 160+ words into categories that the companion phone app shares",
+      "Built a practice mode with audio, hints, and reveal-the-answer",
+      "Tracked accuracy, streaks, words mastered, and a seven-day activity chart",
+      "Added scheduled reminders, CSV export, and import from Excel",
+      "Shipped the whole interface bilingually, Spanish and English",
     ],
   },
   {
@@ -196,11 +205,7 @@ export const projects: Project[] = [
     period: "Shipped",
     tint: "mint",
     tools: ["HTML", "CSS", "JavaScript", "Figma", "VS Code"],
-    images: [
-      "/project-previews/tassen-01.png",
-      "/project-previews/tassen-02.png",
-      "/project-previews/tassen-03.png",
-    ],
+    images: ["/project-previews/tassen-01.jpg"],
     highlights: [
       "Designed the layout and page structure in Figma",
       "Built the front end with HTML, CSS, and JavaScript",
@@ -410,17 +415,19 @@ export const hobbySlides: Hobby[] = [
     span: "tall",
   },
   {
-    title: "crochet",
-    text: "Small handmade things, mostly on the commute.",
-    image: "/hobbies/crochet.jpg",
-    tint: "cream",
-    span: "wide",
-  },
-  {
+    // Wide slot suits the vista: the crop keeps the mountains and the sound.
     title: "hiking",
     text: "Trails, mountains, and quiet places.",
     image: "/hobbies/hiking.jpg",
     tint: "mint",
+    span: "wide",
+  },
+  {
+    // Portrait source, so a square crops it far less than the wide slot did.
+    title: "crochet",
+    text: "Small handmade things, mostly on the commute.",
+    image: "/hobbies/crochet.jpg",
+    tint: "lilac",
     span: "square",
   },
   {
