@@ -1,8 +1,8 @@
 export const profile = {
   name: "Andrea Watanabe",
   tagline:
-    "Economics student turning messy information into clear, useful tools — across data, business, and design.",
-  location: "Vancouver, BC",
+    "Economics student concentrating in Data Analysis, building Excel, Power BI, SQL and AI tools that teams use every day.",
+  location: "Burnaby, BC",
   email: "sakurawt32@gmail.com",
   linkedin: "https://www.linkedin.com/in/andreawatanabe/",
   github: "https://github.com/AndreaWatanabe",
@@ -45,6 +45,8 @@ export type Project = {
   context: string;
   role: string;
   period: string;
+  /** Shown as a badge on the cards when the work is still ongoing. */
+  status?: string;
   /** Background wash behind the screenshot panel. */
   tint: "blue" | "pink" | "lilac" | "mint" | "cream" | "peach";
   tools: string[];
@@ -95,6 +97,7 @@ export const projects: Project[] = [
       "A self-directed analytics project built on 4,200 simulated records, modelled on the kind of operational reporting I prepare at work. The question behind it: where does a case actually slow down, and which records can't be trusted? Still in progress — I'm building it out page by page.",
     role: "Data modelling and dashboard design",
     period: "In progress",
+    status: "In progress",
     tint: "lilac",
     tools: ["Power BI", "Excel", "Data Analysis"],
     images: [],
@@ -172,13 +175,13 @@ export const projects: Project[] = [
     title: "Protection-Case Documentation System",
     tag: "Used daily by the team",
     blurb:
-      "A centralized Figma resource for worker-protection cases, now part of daily work.",
+      "A documentation web page for worker-protection cases, designed and built, now part of daily work.",
     context:
-      "New interns kept asking the same questions, and the answers lived in people's heads rather than anywhere findable. I mapped what was missing and built one place to look it up.",
-    role: "Research, information design",
+      "New interns kept asking the same questions, and the answers lived in people's heads rather than anywhere findable. I mapped what was missing, designed it in Figma, then built it as a web page the team could open and search.",
+    role: "Research, design, front-end build",
     period: "2026",
     tint: "blue",
-    tools: ["Figma", "Documentation", "Process design"],
+    tools: ["Figma", "HTML", "CSS", "JavaScript"],
     images: [
       "/project-previews/sawp-01.png",
       "/project-previews/sawp-02.png",
@@ -186,11 +189,11 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Identified the gaps in the existing documentation",
-      "Created a centralized Figma resource to close them",
+      "Designed the structure in Figma, then built it as a web page",
       "Organized information about worker-protection cases so it is findable",
       "Shaped it around how staff and interns actually look things up",
     ],
-    outcome: "Now used daily by staff and interns on the team.",
+    outcome: "Used daily by every intern on the team.",
   },
   {
     slug: "tassen-corp-website",
@@ -239,7 +242,7 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
-    role: "Seasonal Agricultural Worker Program Intern",
+    role: "Co-op Intern, Seasonal Agricultural Worker Program",
     place: "Consulate General of Mexico",
     location: "Vancouver, BC",
     date: "May 2026 — Aug 2026",
@@ -251,12 +254,12 @@ export const experiences: Experience[] = [
     tint: "pink",
     bullets: [
       "Maintained and analyzed an Excel database of roughly 3,000–5,000 workers and employers",
-      "Prepared monthly reports on worker inflow and program trends",
-      "Entered, updated, and validated information in the Mexican EPC system",
-      "Worked on health, insurance, and worker-protection cases",
+      "Co-prepared four monthly reports on workforce inflow and program trends",
+      "Built two Microsoft Copilot agents to automate recurring email review, saving around an hour a day",
+      "Designed and built a protection-case documentation web page every intern on the team uses daily",
+      "Updated health, insurance, and protection-case records in the consulate's case-management system",
+      "Coordinated accurate communication across workers, employers, and internal staff",
       "Investigated missing, incomplete, or inconsistent records",
-      "Built Microsoft Copilot agents for recurring email workflows, cutting handling time by ~50%",
-      "Created a Figma protection-case resource now used daily by staff and interns",
       "Supported a FIFA worker-protection awareness campaign with Figma graphics for Instagram",
     ],
     skills: ["Excel", "Data validation", "Reporting", "Copilot agents", "Figma"],
@@ -272,6 +275,7 @@ export const experiences: Experience[] = [
     },
     tint: "lilac",
     bullets: [
+      "Co-organized a large event and represented Lean In at an external event",
       "Plan and coordinate monthly events end to end",
       "Conduct speaker outreach",
       "Research participants' industries and professional backgrounds, then design activities around what I find",
@@ -306,12 +310,13 @@ export const experiences: Experience[] = [
     date: "Oct 2024 — May 2025",
     years: "2024—2025",
     highlight: {
-      label: "Monthly professional-development events, planned and delivered end to end",
+      value: "5",
+      label: "professional-development events planned, two run from start to finish",
     },
     tint: "blue",
     bullets: [
-      "Planned, hosted, and delivered monthly professional-development events",
-      "Conducted speaker outreach and coordinated schedules, materials, and attendees",
+      "Planned five professional-development events, running two from start to finish",
+      "Secured three industry speakers, and coordinated schedules, materials, and attendees",
       "Provided live event support and resolved changing needs on the day",
       "Developed the concept for a design challenge, defining its deliverables, target dates, and timeline",
       "Coordinated the project handoff when another person took over",
@@ -321,17 +326,18 @@ export const experiences: Experience[] = [
   {
     role: "Accounting Assistant",
     place: "AN Consulting & Services SAC",
+    location: "Lima, Peru (hybrid)",
     date: "Dec 2024 — Feb 2025",
     years: "2024—2025",
     highlight: {
-      label: "Reconciliations and balance-sheet review, with discrepancies chased down before reporting",
+      value: "100+",
+      label: "bank transactions reconciled; two invalid ones caught before reporting",
     },
     tint: "cream",
     bullets: [
-      "Maintained financial records in Excel",
-      "Completed bank reconciliations",
-      "Reviewed balance-sheet information and checked supporting documentation",
-      "Investigated discrepancies and corrected inconsistencies before financial reporting",
+      "Reconciled 100+ bank transactions in Excel against supporting documents",
+      "Flagged two invalid transactions before reporting, preventing an S/500 loss",
+      "Maintained financial records and reviewed balance-sheet information",
     ],
     skills: ["Excel", "Reconciliation", "Financial records"],
   },
@@ -353,20 +359,16 @@ export const sectors = [
 
 export const education = {
   school: "Simon Fraser University",
-  degree: "Bachelor of Arts in Economics",
+  degree: "Bachelor of Arts in Economics (Co-op Program)",
   faculty: "Faculty of Arts and Social Sciences",
   concentration: "Concentration in Data Analysis",
   graduation: "Expected December 2027",
   coursework: [
-    "ECON 305",
-    "ECON 333 — Statistical Analysis of Economic Data / Econometrics",
-    "ECON 334",
-    "STAT 452",
-    "Introduction to R for Data Science",
-    "Business Statistics",
-    "Project Management",
-    "Financial Accounting",
-    "Business Technology Management",
+    "STAT 452 — Statistical Learning & Prediction",
+    "ECON 334 — Data Visualization in R",
+    "ECON 305 — Intermediate Macroeconomics",
+    "ECON 302 — Strategic Microeconomics",
+    "ECON 355W — Economic Development",
   ],
 };
 
@@ -391,9 +393,9 @@ export const certificates = [
  * ------------------------------------------------------------------ */
 
 export const languages = [
-  { name: "Spanish", level: "Fluent / professional" },
-  { name: "English", level: "Fluent / professional" },
-  { name: "French", level: "A2 — currently learning" },
+  { name: "Spanish", level: "Native" },
+  { name: "English", level: "Fluent" },
+  { name: "French", level: "A2" },
 ];
 
 /* ------------------------------------------------------------------ *

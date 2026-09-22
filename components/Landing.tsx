@@ -61,7 +61,7 @@ export default function Landing({ resumeHref }: { resumeHref: string | null }) {
       <div className="landing-meta">
         <span className="hero-status">
           <span className="status-dot" aria-hidden="true" />
-          Open to work
+          Open to Jan 2027 co-op
         </span>
         <span className="hero-place">{profile.location}</span>
         <span className="hero-place">Economics @ SFU</span>

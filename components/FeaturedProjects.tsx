@@ -38,7 +38,12 @@ export default function FeaturedProjects() {
                 )}
               </div>
 
-              <h3>{project.title}</h3>
+              <h3>
+                {project.title}
+                {project.status && (
+                  <span className="tag tag-status">{project.status}</span>
+                )}
+              </h3>
               <p>{project.blurb}</p>
 
               <span className="feature-more">

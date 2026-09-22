@@ -2411,6 +2411,18 @@ a.feature-row:focus-visible {
   border-right: 1px solid var(--line-strong);
 }
 
+/* An ongoing project says so on the card, not only on its own page. */
+.tag-status {
+  color: var(--blossom-deep);
+  background: var(--petal);
+  font-weight: 700;
+}
+
+.featured-card h3 .tag-status {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 /* Monospace tag pills, like the reference. */
 .tag {
   padding: 4px 11px;

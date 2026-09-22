@@ -40,6 +40,7 @@ function ProjectRow({ project }: { project: Project }) {
 
         <p className="feature-meta">
           <span className="feature-org">{project.title}</span>
+          {project.status && <span className="tag tag-status">{project.status}</span>}
           {project.tools.slice(0, 4).map((tool) => (
             <span key={tool} className="tag">
               {tool}
